@@ -1,7 +1,17 @@
+'use client'
 import Image from 'next/image'
 import styles from './page.module.css'
+import Switch from './components/switch/switch'
+import { useState } from 'react'
 
 export default function Home() {
+  const [checked, setChecked] = useState(false);
+  const handleChange = (ev:any) => {
+    console.log('yé!', ev)
+    setChecked(!checked)
+  };
+
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -29,13 +39,12 @@ export default function Home() {
       </div>
 
       <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+        <Switch
+          id='1234'
+          label='Coche-moi!'
+          checked={checked}
+          disabled={false}
+          onChange={handleChange}
         />
       </div>
 

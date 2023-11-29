@@ -1,0 +1,76 @@
+// Slider -------------------------\
+$track-w: 100%;
+$track-h: 0.25em;
+$thumb-d: 1em;
+$track-c: #555;
+$progr-c: #f9c50b;
+
+@mixin track() {
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid rgb(255 255 255 / 30%);
+    width: $track-w;
+    height: $track-h;
+    background: $track-c;
+    background-image: linear-gradient(90deg, $progr-c, $progr-c);
+    background-size: calc(var(--time-slider__output, 0) * 1%) $track-h; // explicit height: bug in Safari otherwise
+    background-repeat: repeat-y;
+}
+
+@mixin thumb() {
+    box-sizing: border-box;
+    border: none;
+    width: $thumb-d;
+    height: $thumb-d;
+    border-radius: 50%;
+    background: $progr-c;
+}
+
+.slider {
+
+    & [type="range"] {
+        &,
+        &::-webkit-slider-thumb {
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        flex: 1;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        min-height: $thumb-d;
+        background: transparent;
+        font: inherit;
+
+        &::-webkit-slider-runnable-track {
+            @include track();
+        }
+
+        &::-moz-range-track {
+            @include track;
+        }
+
+        &::-ms-track {
+            @include track;
+        }
+
+        &::-webkit-slider-thumb {
+            margin-top: 0.5 * ($track-h - $thumb-d);
+            @include thumb;
+        }
+
+        &::-moz-range-thumb {
+            @include thumb;
+        }
+
+        &::-ms-thumb {
+            margin-top: 0;
+            @include thumb;
+        }
+
+        &::-ms-tooltip {
+            display: none;
+        }
+    }
+}
