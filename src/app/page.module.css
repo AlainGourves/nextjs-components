@@ -227,3 +227,10 @@
     transform: rotate(0deg);
   }
 }
+
+
+/*       MES TRUCS          */
+.slider-container{
+  width: 60dvw;
+  min-width: 36rem;
+}

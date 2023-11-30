@@ -1,34 +1,80 @@
 // Slider -------------------------\
-$track-w: 100%;
-$track-h: 0.25em;
-$thumb-d: 1em;
-$track-c: #555;
-$progr-c: #f9c50b;
+// Width: slider takes 100% of his parent's width
+// --slider-value: must be updated by JS !!
 
 @mixin track() {
     box-sizing: border-box;
     border: none;
-    border-bottom: 1px solid rgb(255 255 255 / 30%);
-    width: $track-w;
-    height: $track-h;
-    background: $track-c;
-    background-image: linear-gradient(90deg, $progr-c, $progr-c);
-    background-size: calc(var(--time-slider__output, 0) * 1%) $track-h; // explicit height: bug in Safari otherwise
+    border-radius: calc(var(--track-height) / 2);
+    inline-size: 100%;
+    block-size: var(--track-height);
+    background: var(--track-inactive);
+    background-image: linear-gradient(90deg, var(--track-active), var(--track-active));
+    background-size: calc(var(--slider-value, 0) * 1%) var(--track-height); // explicit  height: bug in Safari otherwise
     background-repeat: repeat-y;
+    box-shadow: 0 0 calc(var(--track-height) / 2) rgba(0, 0, 0, .125) inset;
 }
 
 @mixin thumb() {
     box-sizing: border-box;
     border: none;
-    width: $thumb-d;
-    height: $thumb-d;
+    inline-size: var(--thumb-size);
+    block-size: var(--thumb-size);
     border-radius: 50%;
-    background: $progr-c;
+    background: var(--track-active);
+    box-shadow: 0 0 0 var(--highlight-size) var(--thumb-highlight);
+    transition: box-shadow var(--slider-anim-dur) var(--slider-anim-fn);
 }
 
 .slider {
+    --thumb-size: 1rem;
+    --track-height: calc(var(--thumb-size) / 4);
+    --highlight-size: calc(var(--thumb-size) / 8);
+
+    // ----------------------------- Colors
+    --clr: hsl(209 60% 50%); // Primary color (for reference)
+    --slider-h: 209;
+    --slider-s: 60%;
+    --slider-l: 50%;
+
+    --track-active: hsl(var(--slider-h) var(--slider-s) var(--slider-l));
+    --track-inactive: hsl(0 0% 80%);
+
+    --thumb-highlight: hsl(0 0% 0% / .25);
+
+    @media (prefers-color-scheme: dark) {
+        --track-active: hsl(var(--slider-h) var(--slider-s) calc(var(--slider-l) - 15%));
+        --track-inactive: hsl(0 0% 65%);
+
+        --thumb-highlight: hsl(0 0% 100% / .25);
+    }
+
+    // ----------------------------- Animation
+    --slider-anim-dur: .2s;
+    --slider-anim-fn: ease-out;
+
+    // ----------------------------- Layout
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .5rem; // distance between Swith & Label
+
+    &.label {
+        &-right {
+            flex-direction: row-reverse;
+        }
+
+        &-above {
+            flex-direction: column;
+        }
+
+        &-under {
+            flex-direction: column-reverse;
+        }
+    }
 
     & [type="range"] {
+
         &,
         &::-webkit-slider-thumb {
             appearance: none;
@@ -39,7 +85,7 @@ $progr-c: #f9c50b;
         margin: 0;
         padding: 0;
         width: 100%;
-        min-height: $thumb-d;
+        min-height: var(--thumb-size);
         background: transparent;
         font: inherit;
 
@@ -56,7 +102,7 @@ $progr-c: #f9c50b;
         }
 
         &::-webkit-slider-thumb {
-            margin-top: 0.5 * ($track-h - $thumb-d);
+            margin-top: calc((var(--track-height) - var(--thumb-size)) / 2);
             @include thumb;
         }
 
@@ -71,6 +117,11 @@ $progr-c: #f9c50b;
 
         &::-ms-tooltip {
             display: none;
+        }
+
+        &:not(:disabled):hover {
+            --highlight-size: calc(var(--thumb-size) / 2);
+            cursor: pointer;
         }
     }
 }

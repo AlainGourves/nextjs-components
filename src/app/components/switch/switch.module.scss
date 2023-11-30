@@ -1,4 +1,9 @@
 .switch {
+    /*
+    Track is made with the `input[type="checkbox"]`
+    Thumb with the `:before`
+    */
+
     // ----------------------------- Dimensions
     --thumb-size: 1rem;
     --track-size: calc(var(--thumb-size) * 2);
@@ -6,16 +11,16 @@
     --highlight-size: calc(var(--track-padding) / 2);
 
     // ----------------------------- Colors
-    --clr: hsl(209 60% 50%);// Primary color
+    --clr: hsl(209 60% 50%); // Primary color
     --switch-h: 209;
     --switch-s: 60%;
     --switch-l: 50%;
 
-    --thumb: hsl(0, 0%, 100%);
-    --thumb-highlight: hsla(0, 0%, 0%, .25);
+    --thumb: hsl(0 0% 100%);
+    --thumb-highlight: hsl(0 0% 0% / .25);
 
     --track-active: hsl(var(--switch-h) var(--switch-s) var(--switch-l));
-    --track-inactive: hsl(80, 0%, 80%);
+    --track-inactive: hsl(0 0% 80%);
 
     --thumb-color: var(--thumb);
     --thumb-color-highlight: var(--thumb-highlight);
@@ -23,11 +28,11 @@
     --track-color-inactive: var(--track-inactive);
 
     @media (prefers-color-scheme: dark) {
-        --thumb: hsl(0, 0%, 10%);
-        --thumb-highlight: hsla(0, 0%, 100%, .25);
+        --thumb: hsl(0 0% 10%);
+        --thumb-highlight: hsl(0 0% 100% / .25);
 
         --track-active: hsl(var(--switch-h) var(--switch-s) calc(var(--switch-l) - 15%));
-        --track-inactive: hsl(80, 0%, 35%);
+        --track-inactive: hsl(0 0% 35%);
     }
 
     // ----------------------------- Animation
@@ -54,6 +59,7 @@
         }
     }
 
+    // TRACK -------
     &>[type="checkbox"] {
         --thumb-position: 0%;
 
@@ -68,7 +74,7 @@
         box-sizing: content-box;
 
         background-color: var(--track-color-inactive);
-        box-shadow: 0 0 calc(var(--track-padding) / 2) rgba(0, 0, 0, .125) inset;
+        box-shadow: 0 0 var(--highlight-size) rgba(0, 0, 0, .125) inset;
 
         flex-shrink: 0; // flex item can't shrink, space is preserved for the switch
         display: grid;
@@ -77,8 +83,8 @@
 
         transition: background-color var(--switch-anim-dur) linear;
 
+        // THUMB -------
         &::before {
-            // Thumb
             content: '';
             grid-area: track;
             inline-size: var(--thumb-size);
@@ -104,10 +110,10 @@
             cursor: not-allowed;
 
             &::before {
-                box-shadow: 0 0 0 var(--highlight-size) hsla(0, 0%, 100%, .5) inset;
+                box-shadow: 0 0 0 var(--highlight-size) hsl(0 0% 100% / .5) inset;
 
                 @media (prefers-color-scheme: dark) {
-                    box-shadow: 0 0 0 var(--highlight-size) hsla(0, 0%, 0%, .5) inset;
+                    box-shadow: 0 0 0 var(--highlight-size) hsl(0 0% 0% / .5) inset;
 
                 }
             }
