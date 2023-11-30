@@ -22,12 +22,19 @@ export default function Slider(props: any) {
         }
     }
 
+    const min = props.min;
+    const max = props.max;
+    // "normamize" the slider's value between 0 & 100
+    const lerp = (val:number)=>{
+        return (100*(val -min))/(max-min);
+    }
+
     return (
         <>
             <label
                 htmlFor={props.id}
                 className={`${sliderStyles['slider']} ${labelPosition ? sliderStyles[labelPosition]:null}`}
-                style={{'--slider-value': `${props.value}`} as any}
+                style={{'--slider-value': `${lerp(props.value)}`} as any}
             >
                 <span>{props.label}</span>
                 <input

@@ -6,16 +6,14 @@ import { useState, useEffect } from 'react';
 
 export default function About() {
     const [checked, setChecked] = useState(false);
-    const [sliderValue, setSliderValue] = useState(12)
+    const [sliderValue, setSliderValue] = useState(66);
 
     const handleCheck = () => {
         setChecked(!checked)
     };
 
     const handleSlider = (ev: any) => {
-        const newValue = parseInt(ev.target.value);
-        ev.target.style.setProperty('--slider-value', newValue);
-        setSliderValue(newValue);
+        setSliderValue(parseInt(ev.target.value));
     }
 
     const pos = 'bottom';
@@ -34,12 +32,13 @@ export default function About() {
             <div className={styles['slider-container']}>
                 <Slider
                     id='3456'
-                    min={0}
-                    max={100}
+                    min={33}
+                    max={288}
                     value={sliderValue}
                     onChange={handleSlider}
                     label="Slide-moi !"
                     labelPosition={pos}
+                    output="Alain"
                 />
             </div>
         </main>
