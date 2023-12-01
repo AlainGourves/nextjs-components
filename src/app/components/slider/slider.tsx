@@ -2,52 +2,63 @@
 'use client'
 import sliderStyles from './slider.module.scss';
 
-export default function Slider(props: any) {
-    let labelPosition: string|undefined;
-    if (props.labelPosition) {
-        switch (props.labelPosition) {
+interface Props {
+    id: string,
+    value: number,
+    min: number,
+    max: number,
+    label?: string | null,
+    labelPosition?: 'top' | 'right' | 'bottom' | 'left',
+    isOutput: boolean,
+    onChange: React.ChangeEventHandler<HTMLInputElement>
+}
+
+export default function Slider({ id, value, min, max, label, labelPosition, isOutput = false, onChange }: Props) {
+
+    let labelPos: string | undefined = undefined;
+    if (labelPosition) {
+        switch (labelPosition) {
             case 'top':
-                labelPosition = 'label-above';
+                labelPos = 'label-above';
                 break;
             case 'right':
-                labelPosition = 'label-right';
+                labelPos = 'label-right';
                 break;
             case 'bottom':
-                labelPosition = 'label-under';
+                labelPos = 'label-under';
                 break;
             default:
                 // 'left' is default position for the label
-                labelPosition = undefined;
+                labelPos = undefined;
                 break;
         }
     }
 
-    const min = props.min;
-    const max = props.max;
     // "normamize" the slider's value between 0 & 100
-    const lerp = (val:number)=>{
-        return (100*(val -min))/(max-min);
+    const lerp = (val: number) => {
+        return (100 * (val - min)) / (max - min);
     }
 
     return (
         <>
             <label
-                htmlFor={props.id}
-                className={`${sliderStyles['slider']} ${labelPosition ? sliderStyles[labelPosition]:null}`}
-                style={{'--slider-value': `${lerp(props.value)}`} as any}
+                htmlFor={id}
+                className={`${sliderStyles['slider']} ${labelPos ? sliderStyles[labelPos] : null}`}
+                style={{ '--slider-value': `${lerp(value)}` } as any}
             >
-                <span>{props.label}</span>
-                <input
-                    type='range'
-                    role='slider'
-                    id={props.id}
-                    aria-disabled={props.disabled}
-                    min={props.min}
-                    max={props.max}
-                    defaultValue={props.value}
-                    onChange={(props.onChange) ? props.onChange : null}
-                />
-                <output>{props.output}</output>
+                <span>{label}</span>
+                <div>
+                    <input
+                        type='range'
+                        role='slider'
+                        id={id}
+                        min={min}
+                        max={max}
+                        defaultValue={value}
+                        onChange={onChange}
+                    />
+                    {isOutput ? <output>{value}</output> : null}
+                </div>
             </label>
         </>
     )
