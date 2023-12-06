@@ -3,6 +3,7 @@ import styles from '../page.module.css'
 import Switch from '../components/switch/switch'
 import Slider from '../components/slider/slider';
 import { useState } from 'react';
+import Select from '../components/select/select';
 
 export default function About() {
     const [checked, setChecked] = useState(false);
@@ -55,6 +56,15 @@ export default function About() {
                     label="Encore !"
                     labelPosition='bottom'
                     isOutput={true}
+                />
+            </div>
+
+            <div>
+                <Select
+                    id="mySelect"
+                    label="Pick an option!"
+                    disabled={false}
+                    selected={3}
                 />
             </div>
         </main>

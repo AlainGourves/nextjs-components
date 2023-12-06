@@ -1,0 +1,44 @@
+.agf-select {
+
+    // ----------------------------- Colors
+    --clr: hsl(209 60% 50%); // Primary color
+    --select-h: 209;
+    --select-s: 60%;
+    --select-l: 50%;
+    --select-active: hsl(var(--select-h) var(--select-s) var(--select-l));
+
+    // ----------------------------- Layout
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .5rem;
+
+    & select {
+        --_arrow: 2.2em;
+        appearance: none;
+        display: inline-block;
+        min-width: 15ch;
+        max-width: 30ch;
+        border: 1px solid var(--select-active);
+        border-radius: .25em;
+        background: #fff;
+        background-image:
+            url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIG1lZXQiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgogICAgPHBhdGggZD0iTTUgOSBsNyA3bDcgLTciIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIgogICAgICAgIHN0cm9rZS13aWR0aD0iMiIgLz4KPC9zdmc+"),
+            linear-gradient(90deg, transparent 0 calc(100% - var(--_arrow)), var(--select-active) 0);
+        background-position: calc(100% - .25em) 50%, 0% 0%;
+        background-size: 24px 24px, 100% 100%;
+        background-repeat: no-repeat;
+        padding: 0.25em var(--_arrow) .25em 0.75em;
+        // outline: none;
+        cursor: pointer;
+
+        font-size: 1rem;
+        line-height: 1.5;
+        color: var(--select-active);
+
+        &::-ms-expand {
+            // for IE, just in case...
+            display: none;
+        }
+    }
+}
