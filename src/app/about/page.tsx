@@ -2,6 +2,7 @@
 import styles from '../page.module.css'
 import Switch from '../components/switch/switch'
 import Slider from '../components/slider/slider';
+import Button from '../components/button/button';
 import { useState } from 'react';
 
 export default function About() {
@@ -24,6 +25,9 @@ export default function About() {
 
     return (
         <main className={styles.main}>
+            <div>
+                <Button label="Clic!" />
+            </div>
             <div>
                 <Switch
                     id='1234'

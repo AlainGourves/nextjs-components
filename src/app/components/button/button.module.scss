@@ -1,0 +1,54 @@
+@mixin button-reset{
+    // Reset button style
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.agf-btn{
+    @include button-reset;
+
+     // ----------------------------- Colors
+     --clr: hsl(209 60% 50%); // Primary color
+     --h: 209;
+     --s: 60%;
+     --l: 50%;
+     --btn-active: hsl(var(--h) var(--s) var(--l));
+
+         // ----------------------------- Animation
+    --anim-dur: .2s;
+    --anim-fn: ease-out;
+
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    // create small vertical space
+    margin-block: 2px;
+    // inivisible border
+    border: solid 2px transparent;
+    border-radius: .4em;
+    padding: .5em 1em;
+    color: #fff;
+    background-color: var(--btn-active);
+
+    transition: all var(--anim-dur) var(--anim-fn);
+
+    &:active{
+        transform: translateY(1px);
+        filter: saturate(150%);
+    }
+
+    &:hover{
+        color: var(--btn-active);
+        background-color: #fff;
+        border-color: var(--btn-active);
+    }
+
+    &:focus-visible{
+        box-shadow: 0 0 0 2px #fff;
+        outline-offset: 5px;
+    }
+}
