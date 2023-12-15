@@ -1,4 +1,4 @@
-@mixin button-reset{
+@mixin button-reset {
     // Reset button style
     padding: 0;
     border: none;
@@ -8,17 +8,19 @@
     cursor: pointer;
 }
 
-.agf-btn{
+.agf-btn {
     @include button-reset;
 
-     // ----------------------------- Colors
-     --clr: hsl(209 60% 50%); // Primary color
-     --h: 209;
-     --s: 60%;
-     --l: 50%;
-     --btn-active: hsl(var(--h) var(--s) var(--l));
+    // ----------------------------- Colors
+    --clr: hsl(209 60% 50%); // Primary color
+    --h: 209;
+    --s: 60%;
+    --l: 50%;
+    --btn-active: hsl(var(--h) var(--s) var(--l));
+    --btn-inactive-clr: hsl(0 0% 50%);
+    --btn-inactive-bg: hsl(0 0% 85%);
 
-         // ----------------------------- Animation
+    // ----------------------------- Animation
     --anim-dur: .2s;
     --anim-fn: ease-out;
 
@@ -33,22 +35,41 @@
     padding: .5em 1em;
     color: #fff;
     background-color: var(--btn-active);
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+    box-shadow:
+        0 3px 1px -2px rgba(0, 0, 0, 0.2),
+        0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 1px 5px 0 rgba(0, 0, 0, 0.12);
 
     transition: all var(--anim-dur) var(--anim-fn);
 
-    &:active{
+    &:active {
         transform: translateY(1px);
         filter: saturate(150%);
     }
 
-    &:hover{
-        color: var(--btn-active);
-        background-color: #fff;
-        border-color: var(--btn-active);
+    &:disabled {
+        cursor: not-allowed;
+        background-color: var(--btn-inactive-bg);
+        border-color: var(--btn-inactive-clr);
+        color: var(--btn-inactive-clr);
+        box-shadow: none;
     }
 
-    &:focus-visible{
+    @media (hover:hover) {
+
+        // CSS hover style remains after button click in iOS devices
+        // https://stackoverflow.com/questions/47507495/css-hover-style-remains-after-button-click-in-ios-devices
+        &:not(:disabled):hover {
+            color: var(--btn-active);
+            background-color: #fff;
+            border-color: var(--btn-active);
+        }
+    }
+
+    &:focus-visible {
         box-shadow: 0 0 0 2px #fff;
         outline-offset: 5px;
     }
+
 }

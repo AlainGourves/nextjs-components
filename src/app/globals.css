@@ -105,3 +105,9 @@ a {
     color-scheme: dark;
   }
 }
+
+
+/*** ---- Mes trucs ---- ***/
+*:focus:not(:focus-visible) {
+  outline-color: transparent;
+}

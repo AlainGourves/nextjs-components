@@ -22,12 +22,27 @@ export default function About() {
         setSliderValue2(parseInt(ev.target.value));
     }
 
+    const handleBtnClick = (ev:any)=>{
+        console.log("Hello there!", ev.target)
+    }
+
     const pos = 'right';
+
+    const options = [
+        { value: 'option1', text: 'Option 1' },
+        { value: 'option2', text: 'Option 2' },
+        { value: 'option3', text: 'Option 3' },
+        { value: 'option4', text: 'Option 4' },
+    ];
 
     return (
         <main className={styles.main}>
             <div>
-                <Button label="Clic!" />
+                <Button
+                    text="Clic!"
+                    disabled={false}
+                    onClick={handleBtnClick}
+                 />
             </div>
             <div>
                 <Switch
@@ -67,6 +82,7 @@ export default function About() {
                 <Select
                     id="mySelect"
                     label="Pick an option!"
+                    options={options}
                     disabled={false}
                     selected={3}
                 />

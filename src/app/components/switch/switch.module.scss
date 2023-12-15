@@ -36,8 +36,8 @@
     }
 
     // ----------------------------- Animation
-    --switch-anim-dur: .2s;
-    --switch-anim-fn: ease-out;
+    --anim-dur: .2s;
+    --anim-fn: ease-out;
 
     // ----------------------------- Layout
     display: flex;
@@ -81,7 +81,7 @@
         align-items: center;
         grid: [track] 1fr / [track] 1fr;
 
-        transition: background-color var(--switch-anim-dur) linear;
+        transition: all var(--anim-dur) var(--anim-fn);
 
         // THUMB -------
         &::before {
@@ -95,9 +95,10 @@
 
             box-shadow: 0 0 0 var(--highlight-size) var(--thumb-color-highlight);
             transform: translateX(var(--thumb-position));
-            transition:
-                transform var(--switch-anim-dur) var(--switch-anim-fn),
-                box-shadow var(--switch-anim-dur) var(--switch-anim-fn);
+            transition: inherit;
+            // transition:
+            //     transform var(--anim-dur) var(--anim-fn),
+            //     box-shadow var(--anim-dur) var(--anim-fn);
         }
 
         &:checked {
@@ -134,6 +135,6 @@
 
 @media (prefers-reduced-motion: reduce) {
     .switch {
-        --switch-anim-dur: 0; // no transition
+        --anim-dur: 0; // no transition
     }
 }

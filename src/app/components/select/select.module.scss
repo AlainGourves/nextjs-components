@@ -40,5 +40,10 @@
             // for IE, just in case...
             display: none;
         }
+
+        &:focus-visible{
+            box-shadow: 0 0 0 2px #fff;
+            outline-offset: 5px;
+        }
     }
 }
