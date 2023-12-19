@@ -4,6 +4,10 @@
 
 // TODO: ajouter de l'espace vertical (margin) quand l'output est affiché
 // -> risque de masquer ce qui est au-dessus/en-dessous
+// - label-under: réserver ~1rem au-dessus pour l'output (s'il est présent !!! => div > label.slider:has(output) {
+    // margin-block-start: 3rem; // ajuster au besoin
+//}
+
 
 @mixin track() {
     box-sizing: border-box;
@@ -11,8 +15,8 @@
     border-radius: calc(var(--track-height) / 2);
     inline-size: 100%;
     block-size: var(--track-height);
-    background: var(--track-inactive);
-    background-image: linear-gradient(90deg, var(--track-active), var(--track-active));
+    background: var(--clr-inactive-bg);
+    background-image: linear-gradient(90deg, var(--clr-active), var(--clr-active));
     background-size: calc(var(--slider-value, 0) * 1%) var(--track-height); // explicit  height: bug in Safari otherwise
     background-repeat: repeat-y;
     box-shadow: 0 0 calc(var(--track-height) / 2) rgba(0, 0, 0, .125) inset;
@@ -24,8 +28,8 @@
     inline-size: var(--thumb-size);
     block-size: var(--thumb-size);
     border-radius: 50%;
-    background: var(--track-active);
-    box-shadow: 0 0 0 var(--highlight-size) var(--thumb-highlight);
+    background: var(--clr-active);
+    box-shadow: 0 0 0 var(--highlight-size) var(--clr-highlight);
     transition: box-shadow var(--anim-dur) var(--anim-fn);
 }
 
@@ -34,49 +38,11 @@
     --track-height: calc(var(--thumb-size) / 4);
     --highlight-size: calc(var(--thumb-size) / 8);
 
-    // ----------------------------- Colors
-    --clr: hsl(209 60% 50%); // Primary color (for reference)
-    --h: 209;
-    --s: 60%;
-    --l: 50%;
-
-    --track-active: hsl(var(--h) var(--s) var(--l));
-    --track-inactive: hsl(0 0% 80%);
-
-    // --thumb-highlight: hsl(0 0% 0% / .25);
-    --thumb-highlight: hsl(var(--h) var(--s) var(--l) / .25);
-
-    @media (prefers-color-scheme: dark) {
-        --track-active: hsl(var(--h) var(--s) calc(var(--l) - 15%));
-        --track-inactive: hsl(0 0% 65%);
-
-        --thumb-highlight: hsl(0 0% 100% / .25);
-    }
-
-    // ----------------------------- Animation
-    --anim-dur: .2s;
-    --anim-fn: ease-out;
-
     // ----------------------------- Layout
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: .5rem; // distance between Swith & Label
-
-
-    &.label {
-        &-right {
-            flex-direction: row-reverse;
-        }
-
-        &-above {
-            flex-direction: column;
-        }
-
-        &-under {
-            flex-direction: column-reverse;
-        }
-    }
 
     &>div{
         width: 100%;

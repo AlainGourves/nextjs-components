@@ -22,7 +22,7 @@ export default function About() {
         setSliderValue2(parseInt(ev.target.value));
     }
 
-    const handleBtnClick = (ev:any)=>{
+    const handleBtnClick = (ev: any) => {
         console.log("Hello there!", ev.target)
     }
 
@@ -42,7 +42,7 @@ export default function About() {
                     text="Clic!"
                     disabled={false}
                     onClick={handleBtnClick}
-                 />
+                />
             </div>
             <div>
                 <Switch
@@ -51,7 +51,17 @@ export default function About() {
                     onChange={handleCheck}
                     label='Coche-moi!'
                     labelPosition={pos}
-                    />
+                />
+            </div>
+            <div>
+                <Switch
+                    id='4567'
+                    checked={checked}
+                    onChange={handleCheck}
+                    label='Coche-moi!'
+                    labelPosition={pos}
+                    disabled={true}
+                />
             </div>
             <div className={styles['slider-container']}>
                 <Slider
@@ -65,6 +75,7 @@ export default function About() {
                     isOutput={true}
                 />
             </div>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus blanditiis fuga culpa!</p>
             <div className={styles['slider-container']}>
                 <Slider
                     id='42515'
