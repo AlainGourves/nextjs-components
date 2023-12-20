@@ -12,14 +12,10 @@
 
     // ----------------------------- Colors
     --thumb-color: hsl(0 0% 100%);
-    --thumb-highlight: var(--clr-highlight); // hsl(0 0% 100% / .25);
+    --thumb-highlight: var(--clr-highlight);
 
     @media (prefers-color-scheme: dark) {
         --thumb-color: hsl(0 0% 10%);
-        // --thumb-highlight: hsl(0 0% 100% / .25);
-
-        --clr-active: hsl(var(--switch-h) var(--switch-s) calc(var(--switch-l) - 15%));
-        --clr-inactive-bg: hsl(0 0% 35%);
     }
 
     // ----------------------------- Layout
@@ -39,7 +35,6 @@
 
         border: none;
         border-radius: var(--track-size);
-        outline-offset: 5px;
         box-sizing: content-box;
 
         background-color: var(--clr-inactive-bg);
@@ -62,6 +57,7 @@
             border-radius: 50%;
             background: var(--thumb-color);
 
+            box-shadow: 0 0 0 var(--highlight-size) var(--thumb-highlight);
             transform: translateX(var(--thumb-position));
             transition: inherit;
         }
@@ -73,7 +69,6 @@
 
         &:disabled {
             --thumb-color: transparent;
-            cursor: not-allowed;
 
             &::before {
                 box-shadow: 0 0 0 var(--highlight-size) hsl(0 0% 100% / .5) inset;
@@ -87,12 +82,10 @@
 
         &:not(:disabled):hover::before {
             --highlight-size: calc(var(--thumb-size) / 2);
-            cursor: pointer;
         }
     }
 
     // ----------------------------- Interactions
-    cursor: pointer;
     user-select: none; // label's text is not selectable
     -webkit-tap-highlight-color: transparent;
 }

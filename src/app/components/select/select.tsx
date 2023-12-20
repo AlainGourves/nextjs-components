@@ -1,4 +1,5 @@
 'use client'
+import '../component-global.scss';
 import selectStyles from './select.module.scss';
 import { useState, useRef, useEffect } from 'react';
 
@@ -37,7 +38,7 @@ export default function Select(props: Props) {
     return (
         <label
             htmlFor={props.id}
-            className={selectStyles['agf-select']}>
+            className={`agf-component ${selectStyles['agf-select']}`}>
             {props.label && props.label}
             <select
                 id={props.id}

@@ -1,9 +1,0 @@
-/*
-
-En ajoutant `@import '../common.scss';` dans le SCSS de chaque composant,
-
-Error:
-Syntax error: Selector "*" is not pure (pure selectors must contain at least one local class or id)
-
-A cause du `module`=> voir comment importer un fichier de paramètres globaux pour les différents composants
-*/

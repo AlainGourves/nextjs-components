@@ -1,4 +1,5 @@
 'use client'
+import '../component-global.scss';
 import switchStyles from './switch.module.scss';
 
 export default function Switch(props: any) {
@@ -24,7 +25,7 @@ export default function Switch(props: any) {
     return (
         <label
             htmlFor={props.id}
-            className={`${switchStyles.switch} ${labelPosition ? switchStyles[labelPosition]:null}`}
+            className={`agf-component  ${switchStyles.switch} ${labelPosition ? switchStyles[labelPosition]:null}`}
         >
             <span>{props.label}</span>
             <input

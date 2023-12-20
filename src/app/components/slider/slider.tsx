@@ -1,5 +1,6 @@
 
 'use client'
+import '../component-global.scss';
 import sliderStyles from './slider.module.scss';
 
 interface Props {
@@ -43,7 +44,7 @@ export default function Slider({ id, value, min, max, label, labelPosition, isOu
         <>
             <label
                 htmlFor={id}
-                className={`${sliderStyles['slider']} ${labelPos ? sliderStyles[labelPos] : null}`}
+                className={`agf-component ${sliderStyles['agf-slider']} ${labelPos ? labelPos : null}`}
                 style={{ '--slider-value': `${lerp(value)}` } as any}
             >
                 <span>{label}</span>
