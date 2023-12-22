@@ -11,10 +11,11 @@ interface Props {
     label?: string | null,
     labelPosition?: 'top' | 'right' | 'bottom' | 'left',
     isOutput: boolean,
+    disabled?: boolean | undefined,
     onChange: React.ChangeEventHandler<HTMLInputElement>
 }
 
-export default function Slider({ id, value, min, max, label, labelPosition, isOutput = false, onChange }: Props) {
+export default function Slider({ id, value, min, max, label, labelPosition, isOutput = false, disabled=undefined, onChange }: Props) {
 
     let labelPos: string | undefined = undefined;
     if (labelPosition) {
@@ -56,6 +57,7 @@ export default function Slider({ id, value, min, max, label, labelPosition, isOu
                         min={min}
                         max={max}
                         defaultValue={value}
+                        disabled={disabled}
                         onChange={onChange}
                     />
                     {isOutput ? <output>{value}</output> : null}

@@ -2,33 +2,27 @@
 // Width: slider takes 100% of his parent's width
 // --slider-value: must be updated by JS !! (& be unitless !!!)
 
-// TODO: ajouter de l'espace vertical (margin) quand l'output est affiché
-// -> risque de masquer ce qui est au-dessus/en-dessous
-// - label-under: réserver ~1rem au-dessus pour l'output (s'il est présent !!! => div > label.slider:has(output) {
-// margin-block-start: 3rem; // ajuster au besoin
-//}
-
-
 @mixin track() {
+    --__bg-clr: var(--clr-active);
     box-sizing: border-box;
     border: none;
     border-radius: calc(var(--track-height) / 2);
     inline-size: 100%;
     block-size: var(--track-height);
     background: var(--clr-inactive-bg);
-    background-image: linear-gradient(90deg, var(--clr-active), var(--clr-active));
-    background-size: calc(var(--slider-value, 0) * 1%) var(--track-height); // explicit  height: bug in Safari otherwise
+    background-image: linear-gradient(90deg, var(--__bg-clr) calc(var(--slider-value, 0) * 1%), var(--clr-inactive-bg) 0);
     background-repeat: repeat-y;
     box-shadow: 0 0 calc(var(--track-height) / 2) rgba(0, 0, 0, .125) inset;
 }
 
 @mixin thumb() {
+    --__bg-clr: var(--clr-active);
     box-sizing: border-box;
     border: none;
     inline-size: var(--thumb-size);
     block-size: var(--thumb-size);
     border-radius: 50%;
-    background: var(--clr-active);
+    background: var(--__bg-clr);
     box-shadow: 0 0 0 var(--highlight-size) var(--clr-highlight);
     transition: box-shadow var(--anim-dur) var(--anim-fn);
 }
@@ -37,12 +31,21 @@
     --thumb-size: 1rem;
     --track-height: calc(var(--thumb-size) / 4);
     --highlight-size: calc(var(--thumb-size) / 8);
+    --output-clr: deeppink;
 
     // ----------------------------- Layout
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: .5rem; // distance between Swith & Label
+
+    // Reserve space for the output when present
+    &:not([class~='label-under']):has(output){
+        margin-block-end: 2rem;
+    }
+    &[class~='label-under']:has(output){
+        margin-block-start: 2.2rem;
+    }
 
     &>div {
         width: 100%;
@@ -101,14 +104,38 @@
 
         &:not(:disabled):hover {
             --highlight-size: calc(var(--thumb-size) / 2);
-            cursor: pointer;
+            // cursor: pointer;
+        }
+
+        &:disabled::-webkit-slider-runnable-track {
+            --__bg-clr: color-mix(in srgb, var(--clr-active), white);
+        }
+
+        &:disabled::-moz-range-track {
+            --__bg-clr: color-mix(in srgb, var(--clr-active), white);
+        }
+
+        &:disabled::-ms-track {
+            --__bg-clr: color-mix(in srgb, var(--clr-active), white);
+        }
+
+        &:disabled::-webkit-slider-thumb {
+            --__bg-clr: color-mix(in srgb, var(--clr-active), white);
+        }
+
+        &:disabled::-moz-range-thumb {
+            --__bg-clr: color-mix(in srgb, var(--clr-active), white);
+        }
+
+        &:disabled::-ms-thumb {
+            --__bg-clr: color-mix(in srgb, var(--clr-active), white);
         }
     }
 
     // Output -----------------------------
     & output {
-        --__clr: deeppink;
-        background: var(--__clr);
+        --__bg-color: var(--output-clr);
+        background: var(--__bg-color);
         min-width: max-content;
         padding: .25em .5em;
         position: absolute;
@@ -131,12 +158,16 @@
             width: 100%;
             height: 50%;
             background-image: conic-gradient(from calc(180deg - var(--__theta)) at 50% 0,
-                    var(--__clr) calc(var(--__theta) * 2),
+                    var(--__bg-color) calc(var(--__theta) * 2),
                     transparent 0);
             top: -0.25em;
             left: 0;
             z-index: -1;
         }
+    }
+
+    & [type="range"]:disabled + output {
+        --__bg-color: color-mix(in hsl, var(--output-clr), white);
     }
 
     &[class~='label-under'] output {
@@ -145,7 +176,7 @@
 
         &:before {
             background-image: conic-gradient(from calc(-1 * var(--__theta)) at 50% 100%,
-                    var(--__clr) calc(var(--__theta) * 2),
+                    var(--__bg-color) calc(var(--__theta) * 2),
                     transparent 0);
             top: initial;
             bottom: -0.25em;

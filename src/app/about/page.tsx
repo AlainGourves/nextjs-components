@@ -3,17 +3,27 @@ import styles from '../page.module.css'
 import Switch from '../components/switch/switch'
 import Slider from '../components/slider/slider';
 import Button from '../components/button/button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Select from '../components/select/select';
 
 export default function About() {
-    const [checked, setChecked] = useState(false);
+    const [checked1, setChecked1] = useState(false);
+    const [checked2, setChecked2] = useState(false);
+    const [switchDisabled, setSwitchDisabled] = useState(true);
     const [sliderValue1, setSliderValue1] = useState(66);
     const [sliderValue2, setSliderValue2] = useState(50);
 
-    const handleCheck = () => {
-        setChecked(!checked)
+    const handleCheck1 = () => {
+        setChecked1(!checked1);
     };
+
+    const handleCheck2 = () => {
+        setChecked2(!checked2)
+    };
+
+    useEffect(()=>{
+        setSwitchDisabled(!checked1);
+    }, [checked1])
 
     const handleSlider1 = (ev: React.ChangeEvent<HTMLInputElement>) => {
         setSliderValue1(parseInt(ev.target.value));
@@ -22,7 +32,7 @@ export default function About() {
         setSliderValue2(parseInt(ev.target.value));
     }
 
-    const handleBtnClick = (ev: any) => {
+    const handleBtnClick = (ev: React.MouseEvent<HTMLElement>) => {
         console.log("Hello there!", ev.target)
     }
 
@@ -39,7 +49,7 @@ export default function About() {
         <main className={styles.main}>
             <div>
                 <Button
-                    text="Clic!"
+                    text="Button"
                     disabled={false}
                     onClick={handleBtnClick}
                 />
@@ -47,20 +57,20 @@ export default function About() {
             <div>
                 <Switch
                     id='1234'
-                    checked={checked}
-                    onChange={handleCheck}
-                    label='Coche-moi!'
+                    checked={checked1}
+                    onChange={handleCheck1}
+                    label='Switch'
                     labelPosition={pos}
                 />
             </div>
             <div>
                 <Switch
                     id='4567'
-                    checked={checked}
-                    onChange={handleCheck}
-                    label='Coche-moi!'
+                    checked={checked2}
+                    onChange={handleCheck2}
+                    label='Disabled Switch'
                     labelPosition={pos}
-                    disabled={true}
+                    disabled={switchDisabled}
                 />
             </div>
             <div className={styles['slider-container']}>
@@ -70,7 +80,7 @@ export default function About() {
                     max={288}
                     value={sliderValue1}
                     onChange={handleSlider1}
-                    label="Slide-moi !"
+                    label="Slider"
                     labelPosition={pos}
                     isOutput={true}
                 />
@@ -83,16 +93,17 @@ export default function About() {
                     max={200}
                     value={sliderValue2}
                     onChange={handleSlider2}
-                    label="Encore !"
+                    label="Another Slider"
                     labelPosition='bottom'
                     isOutput={true}
+                    disabled={true}
                 />
             </div>
 
             <div>
                 <Select
                     id="mySelect"
-                    label="Pick an option!"
+                    label="Select Menu"
                     options={options}
                     disabled={false}
                     selected={3}

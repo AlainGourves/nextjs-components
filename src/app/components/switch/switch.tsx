@@ -25,7 +25,7 @@ export default function Switch(props: any) {
     return (
         <label
             htmlFor={props.id}
-            className={`agf-component  ${switchStyles.switch} ${labelPosition ? switchStyles[labelPosition]:null}`}
+            className={`agf-component  ${switchStyles['agf-switch']} ${labelPosition ? switchStyles[labelPosition]:null}`}
         >
             <span>{props.label}</span>
             <input

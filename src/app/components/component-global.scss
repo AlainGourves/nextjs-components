@@ -1,20 +1,4 @@
-/*
-
-En ajoutant `@import '../common.scss';` dans le SCSS de chaque composant,
-
-Error:
-Syntax error: Selector "*" is not pure (pure selectors must contain at least one local class or id)
-
-A cause du `module`=> voir comment importer un fichier de paramètres globaux pour les différents composants
-*/
-
-
-/*** ---- Mes trucs ---- ***/
-
-/*** ---- Variables Composants ---- ***/
-
-// TODO: ajouter ue classe générale sur tous les composants pour toutes les propriétés communes
-
+/*** ---- Components' global variables & properties ---- ***/
 :root {
     // ----------------------------- Colors
     --clr: hsl(209 60% 50%); // Primary color
@@ -28,14 +12,10 @@ A cause du `module`=> voir comment importer un fichier de paramètres globaux po
 
 
     @media (prefers-color-scheme: dark) {
-
         --clr-active: hsl(var(--h) var(--s) calc(var(--l) - 15%));
         --clr-inactive-bg: hsl(0 0% 35%);
         --clr-highlight: hsl(0 0% 100% / .25);
     }
-
-
-
 }
 
 .agf-component {
@@ -53,23 +33,24 @@ A cause du `module`=> voir comment importer un fichier de paramètres globaux po
         outline-offset: 5px;
     }
 
-    cursor: pointer;
+    &:not(:disabled):hover,
+    & :not(:disabled):hover {
+        cursor: pointer;
+    }
 
-    &:disabled {
+    &:disabled:hover,
+    & :disabled:hover {
         cursor: not-allowed;
     }
 
-    // & [class~='label-right'] {
     &.label-right {
         flex-direction: row-reverse;
     }
 
-    // & [class~='label-above'] {
     &.label-above {
         flex-direction: column;
     }
 
-    // & [class~='label-under'] {
     &.label-under {
         flex-direction: column-reverse;
     }
