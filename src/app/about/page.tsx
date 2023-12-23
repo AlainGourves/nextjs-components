@@ -109,6 +109,16 @@ export default function About() {
                     selected={3}
                 />
             </div>
+
+            <div>
+                <Select
+                    id="mySelectDisabled"
+                    label="Disabled Select Menu"
+                    options={options}
+                    disabled={true}
+                    selected={0}
+                />
+            </div>
         </main>
     )
 }
