@@ -1,0 +1,68 @@
+@mixin textarea-reset {
+    // Reset style
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+}
+
+.agf-textfield {
+
+
+    // ----------------------------- Layout
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .5rem; // distance between Textarea & Label
+
+
+    // invisible border
+    border: solid 2px transparent;
+    border-radius: .4em;
+    padding: .5em 1em;
+
+    transition: all var(--anim-dur) var(--anim-fn);
+
+    & textarea{
+        @include textarea-reset;
+
+        --__padding-block: .5rem;
+        --__padding-inline: .75rem;
+
+        padding: var(--__padding-block) var(--__padding-inline);
+        border: 1px solid var(--clr-active);
+        border-radius: .5rem;
+        background: #fff;
+        width: 32ch;
+        height: calc(6*1rem);
+
+        font-size: 1rem;
+        line-height: 1.5;
+
+        box-shadow:
+        0 3px 1px -2px rgba(0, 0, 0, 0.2),
+        0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 1px 5px 0 rgba(0, 0, 0, 0.12);
+
+
+        &:disabled {
+            background-color: var(--clr-inactive-bg);
+            border-color: var(--clr-inactive-bdr);
+            color: var(--clr-inactive-bdr);
+            box-shadow: none;
+        }
+    }
+
+
+    // @media (hover:hover) {
+
+    //     // CSS hover style remains after button click in iOS devices
+    //     // https://stackoverflow.com/questions/47507495/css-hover-style-remains-after-button-click-in-ios-devices
+    //     &:not(:disabled):hover {
+    //         color: var(--clr-active);
+    //         background-color: #fff;
+    //         border-color: var(--clr-active);
+    //     }
+    // }
+}
