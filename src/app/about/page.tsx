@@ -5,6 +5,7 @@ import Slider from '../components/slider/slider';
 import Button from '../components/button/button';
 import { useState, useEffect } from 'react';
 import Select from '../components/select/select';
+import TextField from '../components/textfield/textfield';
 
 export default function About() {
     const [checked1, setChecked1] = useState(false);
@@ -117,6 +118,16 @@ export default function About() {
                     options={options}
                     disabled={true}
                     selected={0}
+                />
+            </div>
+
+            <div>
+                <TextField
+                    id="myTextField"
+                    disabled={false}
+                    readOnly={false}
+                    label="Type your text"
+                    labelPosition="right"
                 />
             </div>
         </main>

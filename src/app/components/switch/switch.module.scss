@@ -8,7 +8,7 @@
     --thumb-size: 1rem;
     --track-size: calc(var(--thumb-size) * 2);
     --track-padding: calc(var(--thumb-size) / 4);
-    --highlight-size: calc(var(--track-padding) / 2);
+    --highlight-size: 0;
 
     // ----------------------------- Colors
     --thumb-color: hsl(0 0% 100%);
@@ -64,7 +64,7 @@
 
         &:checked {
             --thumb-position: calc(var(--track-size) - 100%);
-            background-color: var(--clr-active);  // TODO checked track bg color
+            background-color: var(--clr-active); // TODO checked track bg color
         }
 
         &:disabled {

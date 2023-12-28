@@ -28,6 +28,8 @@
         line-height: 1.5;
         color: var(--clr-active);
 
+        transition: all var(--anim-dur) var(--anim-fn); // TODO
+
         &::-ms-expand {
             // for IE, just in case...
             display: none;

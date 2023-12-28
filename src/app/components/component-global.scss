@@ -5,16 +5,19 @@
     --h: 209;
     --s: 60%;
     --l: 50%;
-    --clr-active: hsl(var(--h) var(--s) var(--l));
+    --hsl: var(--h) var(--s) var(--l);
+    --clr-active: hsl(var(--hsl));
     --clr-inactive-bdr: hsl(0 0% 50%);
     --clr-inactive-bg: hsl(0 0% 85%);
-    --clr-highlight: hsl(var(--h) var(--s) var(--l) / .25);
+    --clr-outline: color-mix(in srgb, var(--clr-active), white);
+    --clr-highlight: hsl(var(--hsl) / .25);
 
 
     @media (prefers-color-scheme: dark) {
         --clr-active: hsl(var(--h) var(--s) calc(var(--l) - 15%));
         --clr-inactive-bg: hsl(0 0% 35%);
-        --clr-highlight: hsl(0 0% 100% / .25);
+        --clr-outline: color-mix(in srgb, var(--clr-active) 75%, white);
+        --clr-highlight: hsl(0 0% 100% / .33);
     }
 }
 
@@ -23,19 +26,26 @@
     --anim-dur: .2s;
     --anim-fn: ease-out;
 
-    &:focus:not(:focus-visible) {
+    &:focus:not(:focus-visible),
+    & :focus:not(:focus-visible) {
         // disable the default outline on a focused element which doesn’t have the :focus-visible state (-> button after a mouse click)
         outline-color: transparent;
     }
 
-    &:focus-visible {
+    &:focus-visible,
+    & :focus-visible {
         box-shadow: 0 0 0 2px #fff;
         outline-offset: 5px;
     }
 
-    &:not(:disabled):hover,
-    & :not(:disabled):hover {
-        cursor: pointer;
+    // &:not(:disabled):hover,
+    // &:not(:disabled):not([readonly]):hover,
+    // & :not(:disabled):hover {
+    //     cursor: pointer;
+    // }
+
+    & > :not(:disabled):is(:read-write):hover  {
+        cursor: initial;
     }
 
     &:disabled:hover,

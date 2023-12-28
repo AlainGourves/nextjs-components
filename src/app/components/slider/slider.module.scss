@@ -30,7 +30,7 @@
 .agf-slider {
     --thumb-size: 1rem;
     --track-height: calc(var(--thumb-size) / 4);
-    --highlight-size: calc(var(--thumb-size) / 8);
+    --highlight-size: 0;
     --output-clr: hsl(120 var(--s) var(--l));
 
     // ----------------------------- Layout
