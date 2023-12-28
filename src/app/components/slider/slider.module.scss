@@ -133,18 +133,22 @@
 
     // Output -----------------------------
     & output {
+        --__radius: .875rem;
         --__bg-color: var(--output-clr);
         background: var(--__bg-color);
-        min-width: max-content;
-        padding: .25em .5em;
+        width: calc(var(--__radius) * 2);
+        aspect-ratio: 1;
+        padding: .25em;
+        border-radius: 50%;
         position: absolute;
+        display: grid;
+        place-content: center;
         // Make sure that the center of the output is always under the center of the thumb (it's a kind of lerp)
         left: calc(var(--slider-value) * 1% + (50 - var(--slider-value))/100*var(--thumb-size));
-        bottom: -1.6rem;
+        bottom: -2.2rem;
         translate: -50% 0;
-        border-radius: .25em;
         pointer-events: none;
-        font-size: .875em;
+        font-size: .75em;
         line-height: 1;
         color: #fff;
         z-index: -1; // output remains under hover highlight
@@ -154,13 +158,13 @@
             --__theta: 45deg;
             position: absolute;
             content: "";
-            width: 100%;
-            height: 50%;
-            background-image: conic-gradient(from calc(180deg - var(--__theta)) at 50% 0,
-                    var(--__bg-color) calc(var(--__theta) * 2),
-                    transparent 0);
-            top: -0.25em;
-            left: 0;
+            width: var(--__radius);
+            aspect-ratio: 1;
+            background: var(--__bg-color);
+            transform-origin: top left;
+            top: 50%;
+            left: 50%;
+            rotate: calc(var(--__theta) * -3);
             z-index: -1;
         }
     }
@@ -170,15 +174,11 @@
     }
 
     &[class~='label-under'] output {
-        top: -1.85rem;
+        top: -2.4rem;
         bottom: initial;
 
         &:before {
-            background-image: conic-gradient(from calc(-1 * var(--__theta)) at 50% 100%,
-                    var(--__bg-color) calc(var(--__theta) * 2),
-                    transparent 0);
-            top: initial;
-            bottom: -0.25em;
+            rotate: var(--__theta);
         }
     }
 }
