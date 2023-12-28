@@ -48,8 +48,6 @@
         &:focus-visible {
             background: #fff;
             border-color: var(--clr-active);
-            outline: none;
-            box-shadow: 0 0 0 .25em var(--clr-outline);
         }
 
         &:disabled {

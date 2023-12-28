@@ -10,6 +10,7 @@
     --clr-inactive-bdr: hsl(0 0% 50%);
     --clr-inactive-bg: hsl(0 0% 85%);
     --clr-outline: color-mix(in srgb, var(--clr-active), white);
+    --outline-width: .25em; // "fake" outline's width (box-shadow in fact)
     --clr-highlight: hsl(var(--hsl) / .25);
 
 
@@ -26,17 +27,21 @@
     --anim-dur: .2s;
     --anim-fn: ease-out;
 
-    &:focus:not(:focus-visible),
-    & :focus:not(:focus-visible) {
-        // disable the default outline on a focused element which doesn’t have the :focus-visible state (-> button after a mouse click)
-        outline-color: transparent;
+    &:is(button),
+    & :is(input, select, textarea){
+
+        &:focus:not(:focus-visible) {
+            // disable the default outline on a focused element which doesn’t have the :focus-visible state (-> button after a mouse click)
+            outline-color: transparent;
+            outline-width: 0;
+        }
+
+        &:focus-visible {
+            box-shadow: 0 0 0 var(--outline-width) var(--clr-outline);
+            outline-width: 0;
+        }
     }
 
-    &:focus-visible,
-    & :focus-visible {
-        box-shadow: 0 0 0 2px #fff;
-        outline-offset: 5px;
-    }
 
     // &:not(:disabled):hover,
     // &:not(:disabled):not([readonly]):hover,
