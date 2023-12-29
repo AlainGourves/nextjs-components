@@ -1,9 +1,9 @@
-'use client'
+'use client';
 import '../component-global.scss';
-import switchStyles from './switch.module.scss';
+import textFieldStyle from './textfield.module.scss';
 
-export default function Switch(props: any) {
-    let labelPosition: string|undefined;
+export default function TextField(props: any) {
+    let labelPosition;
     if (props.labelPosition) {
         switch (props.labelPosition) {
             case 'top':
@@ -21,22 +21,19 @@ export default function Switch(props: any) {
                 break;
         }
     }
-
+    // readonly
     return (
-        <label
-            htmlFor={props.id}
-            className={`agf-component  ${switchStyles['agf-switch']} ${labelPosition ? switchStyles[labelPosition]:null}`}
+        <label htmlFor={props.id}
+            className={`agf-component ${textFieldStyle['agf-textfield']} ${labelPosition ? labelPosition:null}`}
         >
             <span>{props.label}</span>
-            <input
-                type='checkbox'
-                role='switch'
+            <textarea
                 id={props.id}
-                disabled={(props.disabled) ? props.disabled : false}
-                aria-disabled={(props.disabled) ? props.disabled : false}
-                checked={props.checked}
-                onChange={(props.onChange) ? props.onChange : null}
-            />
+                disabled={props.disabled}
+                readOnly={props.readonly}
+            >
+                {props.value}
+            </textarea>
         </label>
     )
 }

@@ -1,4 +1,4 @@
-.switch {
+.agf-switch {
     /*
     Track is made with the `input[type="checkbox"]`
     Thumb with the `:before`
@@ -8,56 +8,21 @@
     --thumb-size: 1rem;
     --track-size: calc(var(--thumb-size) * 2);
     --track-padding: calc(var(--thumb-size) / 4);
-    --highlight-size: calc(var(--track-padding) / 2);
+    --highlight-size: 0;
 
     // ----------------------------- Colors
-    --clr: hsl(209 60% 50%); // Primary color
-    --switch-h: 209;
-    --switch-s: 60%;
-    --switch-l: 50%;
-
-    --thumb: hsl(0 0% 100%);
-    --thumb-highlight: hsl(0 0% 0% / .25);
-
-    --track-active: hsl(var(--switch-h) var(--switch-s) var(--switch-l));
-    --track-inactive: hsl(0 0% 80%);
-
-    --thumb-color: var(--thumb);
-    --thumb-color-highlight: var(--thumb-highlight);
-    --track-color-active: var(--track-active);
-    --track-color-inactive: var(--track-inactive);
+    --thumb-color: hsl(0 0% 100%);
+    --thumb-highlight: var(--clr-highlight);
 
     @media (prefers-color-scheme: dark) {
-        --thumb: hsl(0 0% 10%);
-        --thumb-highlight: hsl(0 0% 100% / .25);
-
-        --track-active: hsl(var(--switch-h) var(--switch-s) calc(var(--switch-l) - 15%));
-        --track-inactive: hsl(0 0% 35%);
+        --thumb-color: hsl(0 0% 10%);
     }
-
-    // ----------------------------- Animation
-    --anim-dur: .2s;
-    --anim-fn: ease-out;
 
     // ----------------------------- Layout
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: .5rem; // distance between Swith & Label
-
-    &.label {
-        &-right {
-            flex-direction: row-reverse;
-        }
-
-        &-above {
-            flex-direction: column;
-        }
-
-        &-under {
-            flex-direction: column-reverse;
-        }
-    }
 
     // TRACK -------
     &>[type="checkbox"] {
@@ -70,11 +35,10 @@
 
         border: none;
         border-radius: var(--track-size);
-        outline-offset: 5px;
         box-sizing: content-box;
 
-        background-color: var(--track-color-inactive);
-        box-shadow: 0 0 var(--highlight-size) rgba(0, 0, 0, .125) inset;
+        background-color: var(--clr-inactive-bg);
+        box-shadow: 0 0 4px rgba(0, 0, 0, .125) inset;
 
         flex-shrink: 0; // flex item can't shrink, space is preserved for the switch
         display: grid;
@@ -90,31 +54,27 @@
             inline-size: var(--thumb-size);
             block-size: var(--thumb-size);
 
-            background-color: var(--thumb-color);
             border-radius: 50%;
+            background: var(--thumb-color);
 
-            box-shadow: 0 0 0 var(--highlight-size) var(--thumb-color-highlight);
+            box-shadow: 0 0 0 var(--highlight-size) var(--thumb-highlight);
             transform: translateX(var(--thumb-position));
             transition: inherit;
-            // transition:
-            //     transform var(--anim-dur) var(--anim-fn),
-            //     box-shadow var(--anim-dur) var(--anim-fn);
         }
 
         &:checked {
             --thumb-position: calc(var(--track-size) - 100%);
-            background-color: var(--track-color-active);
+            background-color: var(--clr-active); // TODO checked track bg color
         }
 
         &:disabled {
             --thumb-color: transparent;
-            cursor: not-allowed;
 
             &::before {
-                box-shadow: 0 0 0 var(--highlight-size) hsl(0 0% 100% / .5) inset;
+                box-shadow: 0 0 0 2px hsl(0 0% 100% / .75) inset;
 
                 @media (prefers-color-scheme: dark) {
-                    box-shadow: 0 0 0 var(--highlight-size) hsl(0 0% 0% / .5) inset;
+                    box-shadow: 0 0 0 2px hsl(0 0% 0% / .75) inset;
 
                 }
             }
@@ -122,12 +82,10 @@
 
         &:not(:disabled):hover::before {
             --highlight-size: calc(var(--thumb-size) / 2);
-            cursor: pointer;
         }
     }
 
     // ----------------------------- Interactions
-    cursor: pointer;
     user-select: none; // label's text is not selectable
     -webkit-tap-highlight-color: transparent;
 }

@@ -1,12 +1,5 @@
 .agf-select {
 
-    // ----------------------------- Colors
-    --clr: hsl(209 60% 50%); // Primary color
-    --select-h: 209;
-    --select-s: 60%;
-    --select-l: 50%;
-    --select-active: hsl(var(--select-h) var(--select-s) var(--select-l));
-
     // ----------------------------- Layout
     display: flex;
     align-items: center;
@@ -14,36 +7,41 @@
     gap: .5rem;
 
     & select {
-        --_arrow: 2.2em;
+        --__arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid meet' width='24px' height='24px'%3E%3Cpath d='M5 9 l7 7l7 -7' fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' /%3E%3C/svg%3E");
+        --__arrow-size: 2.2em;
         appearance: none;
         display: inline-block;
         min-width: 15ch;
         max-width: 30ch;
-        border: 1px solid var(--select-active);
+        border: 1px solid var(--clr-active);
         border-radius: .25em;
         background: #fff;
         background-image:
-            url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIG1lZXQiIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiPgogICAgPHBhdGggZD0iTTUgOSBsNyA3bDcgLTciIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIgogICAgICAgIHN0cm9rZS13aWR0aD0iMiIgLz4KPC9zdmc+"),
-            linear-gradient(90deg, transparent 0 calc(100% - var(--_arrow)), var(--select-active) 0);
+        var(--__arrow),
+            linear-gradient(90deg, transparent 0 calc(100% - var(--__arrow-size)), var(--clr-active) 0);
         background-position: calc(100% - .25em) 50%, 0% 0%;
         background-size: 24px 24px, 100% 100%;
         background-repeat: no-repeat;
-        padding: 0.25em var(--_arrow) .25em 0.75em;
-        // outline: none;
-        cursor: pointer;
+        padding: 0.25em var(--__arrow-size) .25em 0.75em;
 
         font-size: 1rem;
         line-height: 1.5;
-        color: var(--select-active);
+        color: var(--clr-active);
+
+        transition: all var(--anim-dur) var(--anim-fn); // TODO
 
         &::-ms-expand {
             // for IE, just in case...
             display: none;
         }
 
-        &:focus-visible{
-            box-shadow: 0 0 0 2px #fff;
-            outline-offset: 5px;
+        &:disabled{
+            --__clr: var(--clr-outline);
+            background-image:
+            var(--__arrow),
+            linear-gradient(90deg, transparent 0 calc(100% - var(--__arrow-size)), var(--__clr) 0);
+            border-color: var(--__clr);
+            color: var(--__clr);
         }
     }
 }

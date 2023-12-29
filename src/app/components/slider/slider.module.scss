@@ -1,61 +1,49 @@
+@use "sass:color";
+// For output background color:
+$h: 120;
+$s: 60%;
+$l: 50%;
+$s-dark: 50%;
+$l-dark: 30%;
+$output-color: hsl($h, $s, $l);
+$output-color-dark: hsl($h, $s-dark, $l-dark);
+$output-disabled-fallback: color.mix($output-color, white, 50%);
+$output-disabled-dark-fallback: color.mix($output-color-dark, black, 70%);
 // Slider -------------------------\
 // Width: slider takes 100% of his parent's width
 // --slider-value: must be updated by JS !! (& be unitless !!!)
 
-// TODO: ajouter de l'espace vertical (margin) quand l'output est affiché
-// -> risque de masquer ce qui est au-dessus/en-dessous
-
 @mixin track() {
+    --__bg-clr: var(--clr-active);
     box-sizing: border-box;
     border: none;
     border-radius: calc(var(--track-height) / 2);
     inline-size: 100%;
     block-size: var(--track-height);
-    background: var(--track-inactive);
-    background-image: linear-gradient(90deg, var(--track-active), var(--track-active));
-    background-size: calc(var(--slider-value, 0) * 1%) var(--track-height); // explicit  height: bug in Safari otherwise
+    background: var(--clr-inactive-bg);
+    background-image: linear-gradient(90deg, var(--__bg-clr) calc(var(--slider-value, 0) * 1%), var(--clr-inactive-bg) 0);
     background-repeat: repeat-y;
     box-shadow: 0 0 calc(var(--track-height) / 2) rgba(0, 0, 0, .125) inset;
 }
 
 @mixin thumb() {
+    --__bg-clr: var(--clr-active);
     box-sizing: border-box;
     border: none;
     inline-size: var(--thumb-size);
     block-size: var(--thumb-size);
     border-radius: 50%;
-    background: var(--track-active);
-    box-shadow: 0 0 0 var(--highlight-size) var(--thumb-highlight);
+    background: var(--__bg-clr);
+    box-shadow: 0 0 0 var(--highlight-size) var(--clr-highlight);
     transition: box-shadow var(--anim-dur) var(--anim-fn);
 }
 
-.slider {
+.agf-slider {
     --thumb-size: 1rem;
     --track-height: calc(var(--thumb-size) / 4);
-    --highlight-size: calc(var(--thumb-size) / 8);
-
-    // ----------------------------- Colors
-    --clr: hsl(209 60% 50%); // Primary color (for reference)
-    --h: 209;
-    --s: 60%;
-    --l: 50%;
-
-    --track-active: hsl(var(--h) var(--s) var(--l));
-    --track-inactive: hsl(0 0% 80%);
-
-    // --thumb-highlight: hsl(0 0% 0% / .25);
-    --thumb-highlight: hsl(var(--h) var(--s) var(--l) / .25);
-
-    @media (prefers-color-scheme: dark) {
-        --track-active: hsl(var(--h) var(--s) calc(var(--l) - 15%));
-        --track-inactive: hsl(0 0% 65%);
-
-        --thumb-highlight: hsl(0 0% 100% / .25);
-    }
-
-    // ----------------------------- Animation
-    --anim-dur: .2s;
-    --anim-fn: ease-out;
+    --highlight-size: 0;
+    --output-clr: #{$output-color};
+    --output-clr-dark: #{$output-color-dark};
 
     // ----------------------------- Layout
     display: flex;
@@ -63,27 +51,21 @@
     justify-content: flex-end;
     gap: .5rem; // distance between Swith & Label
 
-
-    &.label {
-        &-right {
-            flex-direction: row-reverse;
-        }
-
-        &-above {
-            flex-direction: column;
-        }
-
-        &-under {
-            flex-direction: column-reverse;
-        }
+    // Reserve space for the output when present
+    &:not([class~='label-under']):has(output) {
+        margin-block-end: 2rem;
     }
 
-    &>div{
+    &[class~='label-under']:has(output) {
+        margin-block-start: 2.2rem;
+    }
+
+    &>div {
         width: 100%;
         position: relative;
     }
 
-    &>span{
+    &>span {
         min-width: max-content;
     }
 
@@ -102,15 +84,6 @@
         min-height: var(--thumb-size);
         background: transparent;
         font: inherit;
-
-        &:focus-visible{
-            outline-offset: 5px;
-        }
-
-        &:focus:not(:focus-visible) {
-            // disable the default outline on a focused element which doesn’t have the :focus-visible state (-> button after a mouse click)
-            outline-color: transparent;
-        }
 
         &::-webkit-slider-runnable-track {
             @include track();
@@ -144,51 +117,98 @@
 
         &:not(:disabled):hover {
             --highlight-size: calc(var(--thumb-size) / 2);
-            cursor: pointer;
+        }
+
+        &:disabled::-webkit-slider-runnable-track {
+            --__bg-clr: var(--clr-outline);
+        }
+
+        &:disabled::-moz-range-track {
+            --__bg-clr: var(--clr-outline);
+        }
+
+        &:disabled::-ms-track {
+            --__bg-clr: var(--clr-outline);
+        }
+
+        &:disabled::-webkit-slider-thumb {
+            --__bg-clr: var(--clr-outline);
+        }
+
+        &:disabled::-moz-range-thumb {
+            --__bg-clr: var(--clr-outline);
+        }
+
+        &:disabled::-ms-thumb {
+            --__bg-clr: var(--clr-outline);
         }
     }
 
     // Output -----------------------------
     & output {
-        --__clr: deeppink;
-        background: var(--__clr);
-        min-width: max-content;
-        padding: .25em .5em;
+        --__radius: .875rem;
+        --__bg-color: var(--output-clr);
+        background: var(--__bg-color);
+        width: calc(var(--__radius) * 2);
+        aspect-ratio: 1;
+        padding: .25em;
+        border-radius: 50%;
         position: absolute;
+        display: grid;
+        place-content: center;
         // Make sure that the center of the output is always under the center of the thumb (it's a kind of lerp)
         left: calc(var(--slider-value) * 1% + (50 - var(--slider-value))/100*var(--thumb-size));
-        bottom: -2rem;
+        bottom: -2.2rem;
         translate: -50% 0;
-        border-radius: .25em;
         pointer-events: none;
-        font-size: .875em;
+        font-size: .75em;
+        line-height: 1;
+        text-align: center;
         color: #fff;
+        z-index: -1; // output remains under hover highlight
+
+        @media (prefers-color-scheme: dark) {
+            --__bg-color: var(--output-clr-dark);
+        }
 
         &:before {
             // conic gradient for the arrow
             --__theta: 45deg;
             position: absolute;
             content: "";
-            width: 100%;
-            height: 50%;
-            background-image: conic-gradient(from calc(180deg - var(--__theta)) at 50% 0,
-            var(--__clr) calc(var(--__theta) * 2),
-            transparent 0);
-            top: -0.25em;
-            left: 0;
+            width: var(--__radius);
+            aspect-ratio: 1;
+            background: var(--__bg-color);
+            transform-origin: top left;
+            top: 50%;
+            left: 50%;
+            rotate: calc(var(--__theta) * -3);
             z-index: -1;
         }
     }
 
-    &.label-under output {
-        top: -2.2rem;
+    & [type="range"]:disabled+output {
+        --__bg-color: #{$output-disabled-fallback};
+
+        @supports (color: color-mix(in srgb, black, white)) {
+            --__bg-color: color-mix(in srgb, var(--output-clr), white);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            --__bg-color: #{$output-disabled-dark-fallback};
+
+            @supports (color: color-mix(in srgb, black, white)) {
+                --__bg-color: color-mix(in srgb, var(--output-clr-dark) 70%, black);
+            }
+        }
+    }
+
+    &[class~='label-under'] output {
+        top: -2.4rem;
         bottom: initial;
+
         &:before {
-            background-image: conic-gradient(from calc(-1 * var(--__theta)) at 50% 100%,
-            var(--__clr) calc(var(--__theta) * 2),
-            transparent 0);
-            top: initial;
-            bottom: -0.25em;
+            rotate: var(--__theta);
         }
     }
 }

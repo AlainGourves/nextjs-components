@@ -1,0 +1,72 @@
+.agf-textfield {
+
+
+    // ----------------------------- Layout
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .5rem; // distance between Textarea & Label
+
+
+    // invisible border
+    border: solid 2px transparent;
+    border-radius: .4em;
+    padding: .5em 1em;
+
+
+    & textarea{
+
+        --__line-height: 1.2;
+        --__nb-lines: 3; // minimum number of lines to show
+        --__padding-block: .5em;
+        --__padding-inline: .75em;
+
+        appearance: none;
+        font-family: inherit;
+        color: inherit;
+        font-size: 1em;
+        font-size: max(16px, 1em);
+        line-height: var(--__line-height);
+        padding: var(--__padding-block) var(--__padding-inline);
+        border: 1px solid var(--clr-inactive-bdr);
+        border-radius: .5rem;
+        background: transparent;
+        min-height: calc(var(--__nb-lines) * var(--__line-height) * 1em + 2 * var(--__padding-block));
+        min-width: 32ch;
+
+        resize: vertical;
+
+        transition: all var(--anim-dur) var(--anim-fn);
+
+
+        box-shadow:
+        0 0 1px 0 rgb(0 0 0 / 0.2),
+        0 0 2px 0 rgb(0 0 0 / 0.14),
+        0 0 5px 0 rgb(0 0 0 / 0.12);
+
+        &:active,
+        &:focus-visible {
+            background: #fff;
+            border-color: var(--clr-active);
+        }
+
+        &:disabled {
+            background-color: var(--clr-inactive-bg);
+            border-color: var(--clr-inactive-bdr);
+            color: var(--clr-inactive-bdr);
+            box-shadow: none;
+        }
+    }
+
+
+    // @media (hover:hover) {
+
+    //     // CSS hover style remains after button click in iOS devices
+    //     // https://stackoverflow.com/questions/47507495/css-hover-style-remains-after-button-click-in-ios-devices
+    //     &:not(:disabled):hover {
+    //         color: var(--clr-active);
+    //         background-color: #fff;
+    //         border-color: var(--clr-active);
+    //     }
+    // }
+}
