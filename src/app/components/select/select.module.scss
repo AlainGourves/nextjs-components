@@ -36,7 +36,7 @@
         }
 
         &:disabled{
-            --__clr: color-mix(in srgb, var(--clr-active), white);
+            --__clr: var(--clr-outline);
             background-image:
             var(--__arrow),
             linear-gradient(90deg, transparent 0 calc(100% - var(--__arrow-size)), var(--__clr) 0);

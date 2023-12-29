@@ -38,7 +38,7 @@
         box-sizing: content-box;
 
         background-color: var(--clr-inactive-bg);
-        box-shadow: 0 0 var(--highlight-size) rgba(0, 0, 0, .125) inset;
+        box-shadow: 0 0 4px rgba(0, 0, 0, .125) inset;
 
         flex-shrink: 0; // flex item can't shrink, space is preserved for the switch
         display: grid;
@@ -71,10 +71,10 @@
             --thumb-color: transparent;
 
             &::before {
-                box-shadow: 0 0 0 var(--highlight-size) hsl(0 0% 100% / .5) inset;
+                box-shadow: 0 0 0 2px hsl(0 0% 100% / .75) inset;
 
                 @media (prefers-color-scheme: dark) {
-                    box-shadow: 0 0 0 var(--highlight-size) hsl(0 0% 0% / .5) inset;
+                    box-shadow: 0 0 0 2px hsl(0 0% 0% / .75) inset;
 
                 }
             }

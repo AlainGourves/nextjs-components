@@ -1,3 +1,14 @@
+@use "sass:color";
+// For output background color:
+$h: 120;
+$s: 60%;
+$l: 50%;
+$s-dark: 50%;
+$l-dark: 30%;
+$output-color: hsl($h, $s, $l);
+$output-color-dark: hsl($h, $s-dark, $l-dark);
+$output-disabled-fallback: color.mix($output-color, white, 50%);
+$output-disabled-dark-fallback: color.mix($output-color-dark, black, 70%);
 // Slider -------------------------\
 // Width: slider takes 100% of his parent's width
 // --slider-value: must be updated by JS !! (& be unitless !!!)
@@ -31,7 +42,8 @@
     --thumb-size: 1rem;
     --track-height: calc(var(--thumb-size) / 4);
     --highlight-size: 0;
-    --output-clr: hsl(120 var(--s) var(--l));
+    --output-clr: #{$output-color};
+    --output-clr-dark: #{$output-color-dark};
 
     // ----------------------------- Layout
     display: flex;
@@ -40,10 +52,11 @@
     gap: .5rem; // distance between Swith & Label
 
     // Reserve space for the output when present
-    &:not([class~='label-under']):has(output){
+    &:not([class~='label-under']):has(output) {
         margin-block-end: 2rem;
     }
-    &[class~='label-under']:has(output){
+
+    &[class~='label-under']:has(output) {
         margin-block-start: 2.2rem;
     }
 
@@ -107,27 +120,27 @@
         }
 
         &:disabled::-webkit-slider-runnable-track {
-            --__bg-clr: color-mix(in srgb, var(--clr-active), white);
+            --__bg-clr: var(--clr-outline);
         }
 
         &:disabled::-moz-range-track {
-            --__bg-clr: color-mix(in srgb, var(--clr-active), white);
+            --__bg-clr: var(--clr-outline);
         }
 
         &:disabled::-ms-track {
-            --__bg-clr: color-mix(in srgb, var(--clr-active), white);
+            --__bg-clr: var(--clr-outline);
         }
 
         &:disabled::-webkit-slider-thumb {
-            --__bg-clr: color-mix(in srgb, var(--clr-active), white);
+            --__bg-clr: var(--clr-outline);
         }
 
         &:disabled::-moz-range-thumb {
-            --__bg-clr: color-mix(in srgb, var(--clr-active), white);
+            --__bg-clr: var(--clr-outline);
         }
 
         &:disabled::-ms-thumb {
-            --__bg-clr: color-mix(in srgb, var(--clr-active), white);
+            --__bg-clr: var(--clr-outline);
         }
     }
 
@@ -150,8 +163,13 @@
         pointer-events: none;
         font-size: .75em;
         line-height: 1;
+        text-align: center;
         color: #fff;
         z-index: -1; // output remains under hover highlight
+
+        @media (prefers-color-scheme: dark) {
+            --__bg-color: var(--output-clr-dark);
+        }
 
         &:before {
             // conic gradient for the arrow
@@ -169,8 +187,20 @@
         }
     }
 
-    & [type="range"]:disabled + output {
-        --__bg-color: color-mix(in srgb, var(--output-clr), white);
+    & [type="range"]:disabled+output {
+        --__bg-color: #{$output-disabled-fallback};
+
+        @supports (color: color-mix(in srgb, black, white)) {
+            --__bg-color: color-mix(in srgb, var(--output-clr), white);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            --__bg-color: #{$output-disabled-dark-fallback};
+
+            @supports (color: color-mix(in srgb, black, white)) {
+                --__bg-color: color-mix(in srgb, var(--output-clr-dark) 70%, black);
+            }
+        }
     }
 
     &[class~='label-under'] output {
