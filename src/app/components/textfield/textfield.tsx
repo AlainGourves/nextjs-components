@@ -31,6 +31,7 @@ export default function TextField(props: any) {
                 id={props.id}
                 disabled={props.disabled}
                 readOnly={props.readonly}
+                placeholder={props.placeholder ?? props.placeholder}
             >
                 {props.value}
             </textarea>
