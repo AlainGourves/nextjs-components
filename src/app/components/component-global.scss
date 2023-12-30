@@ -58,13 +58,6 @@ $outline-fallback-dark: color.mix(hsl($h, $s, $l), white, 75%);
         }
     }
 
-
-    // &:not(:disabled):hover,
-    // &:not(:disabled):not([readonly]):hover,
-    // & :not(:disabled):hover {
-    //     cursor: pointer;
-    // }
-
     & > :not(:disabled):is(:read-write):hover  {
         cursor: initial;
     }

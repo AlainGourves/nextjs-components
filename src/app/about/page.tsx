@@ -54,6 +54,11 @@ export default function About() {
                     disabled={false}
                     onClick={handleBtnClick}
                 />
+                <Button
+                    text="Other"
+                    disabled={true}
+                    classAdd="small"
+                />
             </div>
             <div>
                 <Switch
@@ -63,8 +68,7 @@ export default function About() {
                     label='Switch'
                     labelPosition={pos}
                 />
-            </div>
-            <div>
+
                 <Switch
                     id='4567'
                     checked={checked2}
@@ -74,31 +78,35 @@ export default function About() {
                     disabled={switchDisabled}
                 />
             </div>
-            <div className={styles['slider-container']}>
-                <Slider
-                    id='3456'
-                    min={33}
-                    max={288}
-                    value={sliderValue1}
-                    onChange={handleSlider1}
-                    label="Slider"
-                    labelPosition={pos}
-                    isOutput={true}
-                />
+            <div>
+                <div className={styles['slider-container']}>
+                    <Slider
+                        id='3456'
+                        min={33}
+                        max={288}
+                        value={sliderValue1}
+                        onChange={handleSlider1}
+                        label="Slider"
+                        labelPosition={pos}
+                        isOutput={true}
+                    />
+                </div>
             </div>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus blanditiis fuga culpa!</p>
-            <div className={styles['slider-container']}>
-                <Slider
-                    id='42515'
-                    min={0}
-                    max={200}
-                    value={sliderValue2}
-                    onChange={handleSlider2}
-                    label="Another Slider"
-                    labelPosition='bottom'
-                    isOutput={true}
-                    disabled={true}
-                />
+            <div>
+                <div className={styles['slider-container']}>
+                    <Slider
+                        id='42515'
+                        min={0}
+                        max={200}
+                        value={sliderValue2}
+                        onChange={handleSlider2}
+                        label="Another Slider"
+                        labelPosition='bottom'
+                        isOutput={true}
+                        disabled={true}
+                    />
+                </div>
             </div>
 
             <div>
@@ -109,9 +117,7 @@ export default function About() {
                     disabled={false}
                     selected={3}
                 />
-            </div>
 
-            <div>
                 <Select
                     id="mySelectDisabled"
                     label="Disabled Select Menu"

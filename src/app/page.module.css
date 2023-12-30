@@ -231,9 +231,15 @@
 
 
 /*       MES TRUCS          */
-.slider-container{
-  width: 70vw;
-  width: 70dvw;
+.main .slider-container{
+  width: 70cqw;
   max-width: 36rem;
   margin-block: 1.5rem;
+}
+
+.main > div{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
 }
