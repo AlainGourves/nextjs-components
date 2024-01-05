@@ -1,20 +1,10 @@
 @use "sass:color";
-// For output background color:
-$h: 120;
-$s: 60%;
-$l: 50%;
-$s-dark: 50%;
-$l-dark: 30%;
-$output-color: hsl($h, $s, $l);
-$output-color-dark: hsl($h, $s-dark, $l-dark);
-$output-disabled-fallback: color.mix($output-color, white, 50%);
-$output-disabled-dark-fallback: color.mix($output-color-dark, black, 70%);
 // Slider -------------------------\
 // Width: slider takes 100% of his parent's width
 // --slider-value: must be updated by JS !! (& be unitless !!!)
 
 @mixin track() {
-    --__bg-clr: var(--clr-active);
+    --__bg-clr: var(--clr-active-500);
     box-sizing: border-box;
     border: none;
     border-radius: calc(var(--track-height) / 2);
@@ -27,7 +17,7 @@ $output-disabled-dark-fallback: color.mix($output-color-dark, black, 70%);
 }
 
 @mixin thumb() {
-    --__bg-clr: var(--clr-active);
+    --__bg-clr: var(--clr-active-500);
     box-sizing: border-box;
     border: none;
     inline-size: var(--thumb-size);
@@ -42,8 +32,8 @@ $output-disabled-dark-fallback: color.mix($output-color-dark, black, 70%);
     --thumb-size: 1rem;
     --track-height: calc(var(--thumb-size) / 4);
     --highlight-size: 0;
-    --output-clr: #{$output-color};
-    --output-clr-dark: #{$output-color-dark};
+    --output-clr: var(--clr-secondary-500);
+    --output-clr-dark: var(--clr-secondary-700);
 
     // ----------------------------- Layout
     display: flex;
@@ -119,29 +109,32 @@ $output-disabled-dark-fallback: color.mix($output-color-dark, black, 70%);
             --highlight-size: calc(var(--thumb-size) / 2);
         }
 
-        &:disabled::-webkit-slider-runnable-track {
-            --__bg-clr: var(--clr-outline);
+        &:disabled {
+            --__bg-clr: var(--clr-active-200);
         }
+        // &:disabled::-webkit-slider-runnable-track {
+        //     --__bg-clr: var(--clr-outline);
+        // }
 
-        &:disabled::-moz-range-track {
-            --__bg-clr: var(--clr-outline);
-        }
+        // &:disabled::-moz-range-track {
+        //     --__bg-clr: var(--clr-outline);
+        // }
 
-        &:disabled::-ms-track {
-            --__bg-clr: var(--clr-outline);
-        }
+        // &:disabled::-ms-track {
+        //     --__bg-clr: var(--clr-outline);
+        // }
 
-        &:disabled::-webkit-slider-thumb {
-            --__bg-clr: var(--clr-outline);
-        }
+        // &:disabled::-webkit-slider-thumb {
+        //     --__bg-clr: var(--clr-outline);
+        // }
 
-        &:disabled::-moz-range-thumb {
-            --__bg-clr: var(--clr-outline);
-        }
+        // &:disabled::-moz-range-thumb {
+        //     --__bg-clr: var(--clr-outline);
+        // }
 
-        &:disabled::-ms-thumb {
-            --__bg-clr: var(--clr-outline);
-        }
+        // &:disabled::-ms-thumb {
+        //     --__bg-clr: var(--clr-outline);
+        // }
     }
 
     // Output -----------------------------
@@ -188,18 +181,10 @@ $output-disabled-dark-fallback: color.mix($output-color-dark, black, 70%);
     }
 
     & [type="range"]:disabled+output {
-        --__bg-color: #{$output-disabled-fallback};
-
-        @supports (color: color-mix(in srgb, black, white)) {
-            --__bg-color: color-mix(in srgb, var(--output-clr), white);
-        }
+        --__bg-color: var(--clr-secondary-300);
 
         @media (prefers-color-scheme: dark) {
-            --__bg-color: #{$output-disabled-dark-fallback};
-
-            @supports (color: color-mix(in srgb, black, white)) {
-                --__bg-color: color-mix(in srgb, var(--output-clr-dark) 70%, black);
-            }
+            --__bg-color: var(--clr-secondary-800);
         }
     }
 

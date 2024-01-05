@@ -7,24 +7,15 @@ $h: 209;
 $s: 60%;
 $l: 50%;
 $clr-active: hsl($h, $s, $l);
+$h-secondary: 120;
+$clr-secondary: hsl($h-secondary, $s, $l);
+
 
 $outline-fallback: color.mix(hsl($h, $s, $l), white, 50%);
 $outline-fallback-dark: color.mix(hsl($h, $s, $l), white, 75%);
 
 // for naming different shades
-$shades: (
-    50,
-    100,
-    200,
-    300,
-    400,
-    500,
-    600,
-    700,
-    800,
-    900,
-    950
-);
+$shades: ( 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950);
 
 /*** ---- Components' global variables & properties ---- ***/
 :root {
@@ -37,17 +28,35 @@ $shades: (
     --l: #{$l};
     --hsl: var(--h) var(--s) var(--l);
     --clr-active: hsl(var(--hsl));
+    --h-secondary: #{$h-secondary};
+    --clr-secondary: hsl(var(--h-secondary) var(--s) var(--l));
 
+    // Primary color fallback (uses Sass to compute the values)
     @each $shade in $shades {
         $percent: lerp($shade, 0, 1000, 100, -100);
-        --clr-active-#{$shade}: #{colorMixFallback($clr-active, $shade, $percent)};
+        --clr-active-#{$shade}: #{colorMixFallback($clr-active, $percent)};
+    }
+
+    // Secondary color fallback
+    @each $shade in $shades {
+        $percent: lerp($shade, 0, 1000, 100, -100);
+        --clr-secondary-#{$shade}: #{colorMixFallback($clr-secondary, $percent)};
     }
 
     @supports (color: color-mix(in srgb, black, white)) {
+        // Primary color
         @each $shade in $shades {
             $percent: lerp($shade, 0, 1000, 100, -100);
             --clr-active-#{$shade}: #{colorMix('--clr-active', $percent)};
         }
+
+        // Secondary color
+        @each $shade in $shades {
+            $percent: lerp($shade, 0, 1000, 100, -100);
+            --clr-secondary-#{$shade}: #{colorMix('--clr-secondary', $percent)};
+        }
+
+        --clr-outline: color-mix(in srgb, var(--clr-active), white);
     }
 
     --clr-inactive-bdr: hsl(0 0% 50%);
@@ -55,26 +64,18 @@ $shades: (
     --outline-width: .25em; // "fake" outline's width (box-shadow in fact)
     --clr-highlight: hsl(var(--hsl) / .25);
 
-    --clr-outline: #{$outline-fallback}; // fallback for browsers that doesn't support `color-mix()`
+    --clr-outline: var(--clr-active-200);
 
-    @supports (color: color-mix(in srgb, black, white)) {
-        --clr-outline: color-mix(in srgb, var(--clr-active), white);
-    }
 
     @media (prefers-color-scheme: dark) {
         --clr-active: hsl(var(--h) var(--s) calc(var(--l) - 15%));
         --clr-inactive-bg: hsl(0 0% 35%);
         --clr-highlight: hsl(0 0% 100% / .33);
-        --clr-outline: #{$outline-fallback-dark}; // fallback for browsers that doesn't support `color-mix()`
-
-        @supports (color: color-mix(in srgb, black, white)) {
-            --clr-outline: color-mix(in srgb, var(--clr-active) 75%, white);
-        }
+        --clr-outline: var(--clr-active-800);
     }
 }
 
 .agf-component {
-    color: var(--clr-active-300);
     // ----------------------------- Animation
     --anim-dur: .2s;
     --anim-fn: ease-out;

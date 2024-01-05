@@ -36,12 +36,11 @@
         }
 
         &:disabled{
-            --__clr: var(--clr-outline);
             background-image:
             var(--__arrow),
-            linear-gradient(90deg, transparent 0 calc(100% - var(--__arrow-size)), var(--__clr) 0);
-            border-color: var(--__clr);
-            color: var(--__clr);
+            linear-gradient(90deg, transparent 0 calc(100% - var(--__arrow-size)), var(--clr-active-300) 0);
+            border-color: var(--clr-active-300);
+            color: var(--clr-active-300);
         }
     }
 }
