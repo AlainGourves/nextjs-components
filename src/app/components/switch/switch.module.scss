@@ -38,7 +38,6 @@
         box-sizing: content-box;
 
         background-color: var(--clr-inactive-bg);
-        box-shadow: 0 0 4px rgba(0, 0, 0, .125) inset;
 
         flex-shrink: 0; // flex item can't shrink, space is preserved for the switch
         display: grid;
@@ -46,6 +45,7 @@
         grid: [track] 1fr / [track] 1fr;
 
         transition: all var(--anim-dur) var(--anim-fn);
+        position: relative;
 
         // THUMB -------
         &::before {
@@ -62,9 +62,22 @@
             transition: inherit;
         }
 
+        &::after{
+            // Can't put the inset box-shadow on the checkbox itself -> transition doesn't work from inset box-shadow to exterior one (for the pseudo outline of :focus-within)
+            content: '';
+            inline-size: var(--track-size);
+            block-size: var(--thumb-size);
+            padding: var(--track-padding);
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: var(--track-size);
+            box-shadow: 0 0 .3rem #0008 inset;
+        }
+
         &:checked {
             --thumb-position: calc(var(--track-size) - 100%);
-            background-color: var(--clr-active); // TODO checked track bg color
+            background-color: var(--clr-active);
         }
 
         &:disabled {
@@ -88,11 +101,4 @@
     // ----------------------------- Interactions
     user-select: none; // label's text is not selectable
     -webkit-tap-highlight-color: transparent;
-}
-
-
-@media (prefers-reduced-motion: reduce) {
-    .switch {
-        --anim-dur: 0; // no transition
-    }
 }

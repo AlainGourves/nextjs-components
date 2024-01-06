@@ -30,7 +30,7 @@
         line-height: var(--__line-height);
         padding: var(--__padding-block) var(--__padding-inline);
         border: 1px solid var(--clr-inactive-bdr);
-        border-radius: .5rem;
+        border-radius: var(--bdr-radius);
         background: transparent;
         min-height: calc(var(--__nb-lines) * var(--__line-height) * 1em + 2 * var(--__padding-block));
         min-width: 32ch;

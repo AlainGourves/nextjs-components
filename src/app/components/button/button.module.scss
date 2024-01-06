@@ -19,7 +19,7 @@
     margin-block: 2px;
     // inivisible border
     border: solid 2px transparent;
-    border-radius: .4em;
+    border-radius: var(--bdr-radius);
     padding: .5em 1em;
     color: #fff;
     background-color: var(--clr-active);

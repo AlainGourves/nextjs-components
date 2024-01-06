@@ -4,7 +4,6 @@
 // --slider-value: must be updated by JS !! (& be unitless !!!)
 
 @mixin track() {
-    --__bg-clr: var(--clr-active-500);
     box-sizing: border-box;
     border: none;
     border-radius: calc(var(--track-height) / 2);
@@ -17,7 +16,6 @@
 }
 
 @mixin thumb() {
-    --__bg-clr: var(--clr-active-500);
     box-sizing: border-box;
     border: none;
     inline-size: var(--thumb-size);
@@ -32,14 +30,15 @@
     --thumb-size: 1rem;
     --track-height: calc(var(--thumb-size) / 4);
     --highlight-size: 0;
-    --output-clr: var(--clr-secondary-500);
-    --output-clr-dark: var(--clr-secondary-700);
+    --__bg-clr: var(--clr-active);
 
     // ----------------------------- Layout
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: .5rem; // distance between Swith & Label
+
+    transition: box-shadow var(--anim-dur) var(--anim-fn);
 
     // Reserve space for the output when present
     &:not([class~='label-under']):has(output) {
@@ -110,37 +109,22 @@
         }
 
         &:disabled {
-            --__bg-clr: var(--clr-active-200);
+            --__bg-clr: var(--clr-active-300);
+            @media (prefers-color-scheme: dark) {
+                --__bg-clr: var(--clr-active-600);
+            }
         }
-        // &:disabled::-webkit-slider-runnable-track {
-        //     --__bg-clr: var(--clr-outline);
-        // }
-
-        // &:disabled::-moz-range-track {
-        //     --__bg-clr: var(--clr-outline);
-        // }
-
-        // &:disabled::-ms-track {
-        //     --__bg-clr: var(--clr-outline);
-        // }
-
-        // &:disabled::-webkit-slider-thumb {
-        //     --__bg-clr: var(--clr-outline);
-        // }
-
-        // &:disabled::-moz-range-thumb {
-        //     --__bg-clr: var(--clr-outline);
-        // }
-
-        // &:disabled::-ms-thumb {
-        //     --__bg-clr: var(--clr-outline);
-        // }
     }
 
     // Output -----------------------------
     & output {
         --__radius: .875rem;
-        --__bg-color: var(--output-clr);
+        --__bg-color: var(--clr-secondary-500);
+
+        @media (prefers-color-scheme: dark) {
+            --__bg-color: var(--clr-secondary-700);
+        }
+
         background: var(--__bg-color);
         width: calc(var(--__radius) * 2);
         aspect-ratio: 1;
@@ -159,10 +143,6 @@
         text-align: center;
         color: #fff;
         z-index: -1; // output remains under hover highlight
-
-        @media (prefers-color-scheme: dark) {
-            --__bg-color: var(--output-clr-dark);
-        }
 
         &:before {
             // conic gradient for the arrow

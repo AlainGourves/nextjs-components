@@ -14,7 +14,7 @@
         min-width: 15ch;
         max-width: 30ch;
         border: 1px solid var(--clr-active);
-        border-radius: .25em;
+        border-radius: var(--bdr-radius);
         background: #fff;
         background-image:
         var(--__arrow),
@@ -38,9 +38,9 @@
         &:disabled{
             background-image:
             var(--__arrow),
-            linear-gradient(90deg, transparent 0 calc(100% - var(--__arrow-size)), var(--clr-active-300) 0);
-            border-color: var(--clr-active-300);
-            color: var(--clr-active-300);
+            linear-gradient(90deg, transparent 0 calc(100% - var(--__arrow-size)), var(--clr-inactive-bg) 0);
+            border-color: var(--clr-inactive-bg);
+            color: var(--clr-inactive-bg);
         }
     }
 }
