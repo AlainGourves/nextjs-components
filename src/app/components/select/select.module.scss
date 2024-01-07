@@ -31,16 +31,21 @@
         transition: all var(--anim-dur) var(--anim-fn); // TODO
 
         &::-ms-expand {
-            // for IE, just in case...
+            // for IE, remove native arrow, just in case...
             display: none;
         }
 
         &:disabled{
-            background-image:
-            var(--__arrow),
-            linear-gradient(90deg, transparent 0 calc(100% - var(--__arrow-size)), var(--clr-inactive-bg) 0);
+            background-color: hsl(0 0% 95%);
+            @media (prefers-color-scheme: dark) {
+                background-color: hsl(0 0% 85%);
+            }
+            background-image: var(--__arrow),
+                linear-gradient(90deg, transparent 0 calc(100% - var(--__arrow-size)), var(--clr-inactive-bg) 0);
             border-color: var(--clr-inactive-bg);
             color: var(--clr-inactive-bg);
+            opacity: 1; // browser's default styles may affect opacity
+
         }
     }
 }

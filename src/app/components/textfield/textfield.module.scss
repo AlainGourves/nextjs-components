@@ -24,14 +24,14 @@
         appearance: none;
         font-family: inherit;
         font-weight: normal;
-        color: inherit;
+        color:  var(--clr-active-900);
         font-size: 1em;
         font-size: max(16px, 1em);
         line-height: var(--__line-height);
         padding: var(--__padding-block) var(--__padding-inline);
         border: 1px solid var(--clr-inactive-bdr);
         border-radius: var(--bdr-radius);
-        background: transparent;
+        background: var(--clr-active-50);
         min-height: calc(var(--__nb-lines) * var(--__line-height) * 1em + 2 * var(--__padding-block));
         min-width: 32ch;
         max-width: 100%;

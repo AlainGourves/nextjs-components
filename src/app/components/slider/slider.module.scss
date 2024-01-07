@@ -31,6 +31,7 @@
     --track-height: calc(var(--thumb-size) / 4);
     --highlight-size: 0;
     --__bg-clr: var(--clr-active);
+    --__padding: calc(var(--thumb-size) / 2);
 
     // ----------------------------- Layout
     display: flex;
@@ -38,7 +39,6 @@
     justify-content: flex-end;
     gap: .5rem; // distance between Swith & Label
 
-    transition: box-shadow var(--anim-dur) var(--anim-fn);
 
     // Reserve space for the output when present
     &:not([class~='label-under']):has(output) {
@@ -68,11 +68,12 @@
 
         flex: 1;
         margin: 0;
-        padding: 0;
+        padding-inline: var(--__padding);
+        border-radius: calc(var(--thumb-size) / 2);
         width: 100%;
         min-height: var(--thumb-size);
         background: transparent;
-        font: inherit;
+        transition: box-shadow var(--anim-dur) var(--anim-fn);
 
         &::-webkit-slider-runnable-track {
             @include track();
@@ -134,7 +135,7 @@
         display: grid;
         place-content: center;
         // Make sure that the center of the output is always under the center of the thumb (it's a kind of lerp)
-        left: calc(var(--slider-value) * 1% + (50 - var(--slider-value))/100*var(--thumb-size));
+        left: calc(var(--slider-value) * 1% + (50 - var(--slider-value))/100*(var(--thumb-size) + 2 * var(--__padding)));
         bottom: -2.2rem;
         translate: -50% 0;
         pointer-events: none;
