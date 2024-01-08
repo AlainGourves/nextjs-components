@@ -3,13 +3,19 @@ type RadioProps = {
     label: string,
     groupName: string,
     value: string,
+    checked?: boolean | undefined,
 }
 
 export default function Radio(props:RadioProps) {
 
     return (
         <label htmlFor={props.id}>{props.label}
-        <input type="radio" name={props.groupName} id={props.id} value={props.value} />
+        <input type="radio"
+                name={props.groupName}
+                id={props.id}
+                value={props.value}
+                defaultChecked={props.checked}
+                />
       </label>
     )
 }
