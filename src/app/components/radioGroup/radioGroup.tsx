@@ -3,28 +3,13 @@ import Radio from "./radio";
 import '../component-global.scss';
 import radioGroupStyles from './radioGroup.module.scss';
 
-const radios = [
-    {
-        id: 'hsl',
-        label: 'HSL',
-        value: 'hsl',
-    },
-    {
-        id: 'lch',
-        label: 'LCH',
-        value: 'lch'
-    },
-    {
-        id: 'oklab',
-        label: 'OKLAB',
-        value: 'oklab'
-    },
-    {
-        id: 'xyz',
-        label: 'XYZ',
-        value: 'xyz'
-    }
-]
+type RadioType = {
+    id: string,
+    label: string,
+    groupName: string,
+    value: string,
+    checked?: boolean | undefined,
+}
 
 export default function RadioGroup(props: any) {
     const defaultValue = 'hsl';
@@ -43,7 +28,7 @@ export default function RadioGroup(props: any) {
             <div className={radioGroupStyles['legend']}>Légendaire légende</div>
             <div className={radioGroupStyles['radio-group']} >
             {
-                radios.map(radio => {
+                props.radios.map((radio :RadioType) => {
                     return (
                         <Radio
                             key={radio.id}

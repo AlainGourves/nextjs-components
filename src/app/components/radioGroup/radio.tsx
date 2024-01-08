@@ -1,4 +1,4 @@
-type RadioProps = {
+type RadioType = {
     id: string,
     label: string,
     groupName: string,
@@ -6,7 +6,7 @@ type RadioProps = {
     checked?: boolean | undefined,
 }
 
-export default function Radio(props:RadioProps) {
+export default function Radio(props:RadioType) {
 
     return (
         <label htmlFor={props.id}>{props.label}
