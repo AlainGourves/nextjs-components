@@ -1,50 +1,85 @@
 @use "sass:color";
+@use "sass:math";
+
+@use 'functions' as *;
+
 $h: 209;
 $s: 60%;
 $l: 50%;
+$clr-active: hsl($h, $s, $l);
+$h-secondary: 120;
+$clr-secondary: hsl($h-secondary, $s, $l);
 
-$outline-fallback: color.mix(hsl($h, $s, $l), white, 50%);
-$outline-fallback-dark: color.mix(hsl($h, $s, $l), white, 75%);
+// for naming different shades
+$shades: ( 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950);
 
 /*** ---- Components' global variables & properties ---- ***/
 :root {
     // ----------------------------- Colors
     // NB: Sass require SassScript expressions in custom property values to be written within interpolation.
     // cf. https://sass-lang.com/documentation/breaking-changes/css-vars/
-    --clr: hsl(#{$h} #{$s} #{$l}); // Primary color
+    // --clr: hsl(#{$h} #{$s} #{$l}); // TODO deleatur ?
     --h: #{$h};
     --s: #{$s};
     --l: #{$l};
     --hsl: var(--h) var(--s) var(--l);
-    --clr-active: hsl(var(--hsl));
-    --clr-inactive-bdr: hsl(0 0% 50%);
-    --clr-inactive-bg: hsl(0 0% 85%);
-    --outline-width: .25em; // "fake" outline's width (box-shadow in fact)
-    --clr-highlight: hsl(var(--hsl) / .25);
+    --clr-active: hsl(var(--hsl)); // Primary color
+    --h-secondary: #{$h-secondary};
+    --clr-secondary: hsl(var(--h-secondary) var(--s) var(--l));
 
-    --clr-outline: #{$outline-fallback}; // fallback for browsers that doesn't support `color-mix()`
-    @supports (color: color-mix(in srgb, black, white)){
+    // Primary color fallback (uses Sass to compute the values)
+    @each $shade in $shades {
+        $percent: lerp($shade, 0, 1000, 100, -100);
+        --clr-active-#{$shade}: #{colorMixFallback($clr-active, $percent)};
+    }
+
+    // Secondary color fallback
+    @each $shade in $shades {
+        $percent: lerp($shade, 0, 1000, 100, -100);
+        --clr-secondary-#{$shade}: #{colorMixFallback($clr-secondary, $percent)};
+    }
+
+    @supports (color: color-mix(in srgb, black, white)) {
+        // Primary color
+        @each $shade in $shades {
+            $percent: lerp($shade, 0, 1000, 100, -100);
+            --clr-active-#{$shade}: #{colorMix('--clr-active', $percent)};
+        }
+
+        // Secondary color
+        @each $shade in $shades {
+            $percent: lerp($shade, 0, 1000, 100, -100);
+            --clr-secondary-#{$shade}: #{colorMix('--clr-secondary', $percent)};
+        }
+
         --clr-outline: color-mix(in srgb, var(--clr-active), white);
     }
+
+    --clr-inactive-bdr: hsl(0 0% 50%);
+    --clr-inactive-bg: hsl(0 0% 75%);
+    --outline-width: .25rem; // "fake" outline's width (box-shadow in fact)
+    --clr-highlight: hsl(var(--hsl) / .25);
+
+    --clr-outline: var(--clr-active-200);
+
+    --bdr-radius: .4em;
+
 
     @media (prefers-color-scheme: dark) {
         --clr-active: hsl(var(--h) var(--s) calc(var(--l) - 15%));
         --clr-inactive-bg: hsl(0 0% 35%);
         --clr-highlight: hsl(0 0% 100% / .33);
-        --clr-outline: #{$outline-fallback-dark}; // fallback for browsers that doesn't support `color-mix()`
-        @supports (color: color-mix(in srgb, black, white)){
-            --clr-outline: color-mix(in srgb, var(--clr-active) 75%, white);
-        }
+        --clr-outline: var(--clr-active-300);
     }
 }
 
 .agf-component {
     // ----------------------------- Animation
-    --anim-dur: .2s;
+    --anim-dur: .25s;
     --anim-fn: ease-out;
 
     &:is(button),
-    & :is(input, select, textarea){
+    & :is(input, select, textarea) {
 
         &:focus:not(:focus-visible) {
             // disable the default outline on a focused element which doesn’t have the :focus-visible state (-> button after a mouse click)
@@ -58,7 +93,12 @@ $outline-fallback-dark: color.mix(hsl($h, $s, $l), white, 75%);
         }
     }
 
-    & > :not(:disabled):is(:read-write):hover  {
+    &:not(:disabled):hover,
+    & :not(:disabled):hover {
+        cursor: pointer;
+    }
+
+    &> :not(:disabled):is(:read-write):hover {
         cursor: initial;
     }
 
@@ -82,6 +122,6 @@ $outline-fallback-dark: color.mix(hsl($h, $s, $l), white, 75%);
 
 @media (prefers-reduced-motion: reduce) {
     .agf-component {
-        --anim-dur: 0; // no transition
+        --anim-dur: 0 !important; // no transition
     }
 }

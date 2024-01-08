@@ -14,7 +14,7 @@
         min-width: 15ch;
         max-width: 30ch;
         border: 1px solid var(--clr-active);
-        border-radius: .25em;
+        border-radius: var(--bdr-radius);
         background: #fff;
         background-image:
         var(--__arrow),
@@ -31,17 +31,21 @@
         transition: all var(--anim-dur) var(--anim-fn); // TODO
 
         &::-ms-expand {
-            // for IE, just in case...
+            // for IE, remove native arrow, just in case...
             display: none;
         }
 
         &:disabled{
-            --__clr: var(--clr-outline);
-            background-image:
-            var(--__arrow),
-            linear-gradient(90deg, transparent 0 calc(100% - var(--__arrow-size)), var(--__clr) 0);
-            border-color: var(--__clr);
-            color: var(--__clr);
+            background-color: hsl(0 0% 95%);
+            @media (prefers-color-scheme: dark) {
+                background-color: hsl(0 0% 85%);
+            }
+            background-image: var(--__arrow),
+                linear-gradient(90deg, transparent 0 calc(100% - var(--__arrow-size)), var(--clr-inactive-bg) 0);
+            border-color: var(--clr-inactive-bg);
+            color: var(--clr-inactive-bg);
+            opacity: 1; // browser's default styles may affect opacity
+
         }
     }
 }

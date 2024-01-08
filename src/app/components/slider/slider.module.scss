@@ -1,20 +1,9 @@
 @use "sass:color";
-// For output background color:
-$h: 120;
-$s: 60%;
-$l: 50%;
-$s-dark: 50%;
-$l-dark: 30%;
-$output-color: hsl($h, $s, $l);
-$output-color-dark: hsl($h, $s-dark, $l-dark);
-$output-disabled-fallback: color.mix($output-color, white, 50%);
-$output-disabled-dark-fallback: color.mix($output-color-dark, black, 70%);
 // Slider -------------------------\
 // Width: slider takes 100% of his parent's width
 // --slider-value: must be updated by JS !! (& be unitless !!!)
 
 @mixin track() {
-    --__bg-clr: var(--clr-active);
     box-sizing: border-box;
     border: none;
     border-radius: calc(var(--track-height) / 2);
@@ -27,7 +16,6 @@ $output-disabled-dark-fallback: color.mix($output-color-dark, black, 70%);
 }
 
 @mixin thumb() {
-    --__bg-clr: var(--clr-active);
     box-sizing: border-box;
     border: none;
     inline-size: var(--thumb-size);
@@ -42,14 +30,15 @@ $output-disabled-dark-fallback: color.mix($output-color-dark, black, 70%);
     --thumb-size: 1rem;
     --track-height: calc(var(--thumb-size) / 4);
     --highlight-size: 0;
-    --output-clr: #{$output-color};
-    --output-clr-dark: #{$output-color-dark};
+    --__bg-clr: var(--clr-active);
+    --__padding: calc(var(--thumb-size) / 2);
 
     // ----------------------------- Layout
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: .5rem; // distance between Swith & Label
+
 
     // Reserve space for the output when present
     &:not([class~='label-under']):has(output) {
@@ -79,11 +68,12 @@ $output-disabled-dark-fallback: color.mix($output-color-dark, black, 70%);
 
         flex: 1;
         margin: 0;
-        padding: 0;
+        padding-inline: var(--__padding);
+        border-radius: calc(var(--thumb-size) / 2);
         width: 100%;
         min-height: var(--thumb-size);
         background: transparent;
-        font: inherit;
+        transition: box-shadow var(--anim-dur) var(--anim-fn);
 
         &::-webkit-slider-runnable-track {
             @include track();
@@ -119,35 +109,23 @@ $output-disabled-dark-fallback: color.mix($output-color-dark, black, 70%);
             --highlight-size: calc(var(--thumb-size) / 2);
         }
 
-        &:disabled::-webkit-slider-runnable-track {
-            --__bg-clr: var(--clr-outline);
-        }
-
-        &:disabled::-moz-range-track {
-            --__bg-clr: var(--clr-outline);
-        }
-
-        &:disabled::-ms-track {
-            --__bg-clr: var(--clr-outline);
-        }
-
-        &:disabled::-webkit-slider-thumb {
-            --__bg-clr: var(--clr-outline);
-        }
-
-        &:disabled::-moz-range-thumb {
-            --__bg-clr: var(--clr-outline);
-        }
-
-        &:disabled::-ms-thumb {
-            --__bg-clr: var(--clr-outline);
+        &:disabled {
+            --__bg-clr: var(--clr-active-300);
+            @media (prefers-color-scheme: dark) {
+                --__bg-clr: var(--clr-active-600);
+            }
         }
     }
 
     // Output -----------------------------
     & output {
         --__radius: .875rem;
-        --__bg-color: var(--output-clr);
+        --__bg-color: var(--clr-secondary-500);
+
+        @media (prefers-color-scheme: dark) {
+            --__bg-color: var(--clr-secondary-700);
+        }
+
         background: var(--__bg-color);
         width: calc(var(--__radius) * 2);
         aspect-ratio: 1;
@@ -157,7 +135,7 @@ $output-disabled-dark-fallback: color.mix($output-color-dark, black, 70%);
         display: grid;
         place-content: center;
         // Make sure that the center of the output is always under the center of the thumb (it's a kind of lerp)
-        left: calc(var(--slider-value) * 1% + (50 - var(--slider-value))/100*var(--thumb-size));
+        left: calc(var(--slider-value) * 1% + (50 - var(--slider-value))/100*(var(--thumb-size) + 2 * var(--__padding)));
         bottom: -2.2rem;
         translate: -50% 0;
         pointer-events: none;
@@ -166,10 +144,6 @@ $output-disabled-dark-fallback: color.mix($output-color-dark, black, 70%);
         text-align: center;
         color: #fff;
         z-index: -1; // output remains under hover highlight
-
-        @media (prefers-color-scheme: dark) {
-            --__bg-color: var(--output-clr-dark);
-        }
 
         &:before {
             // conic gradient for the arrow
@@ -188,18 +162,10 @@ $output-disabled-dark-fallback: color.mix($output-color-dark, black, 70%);
     }
 
     & [type="range"]:disabled+output {
-        --__bg-color: #{$output-disabled-fallback};
-
-        @supports (color: color-mix(in srgb, black, white)) {
-            --__bg-color: color-mix(in srgb, var(--output-clr), white);
-        }
+        --__bg-color: var(--clr-secondary-300);
 
         @media (prefers-color-scheme: dark) {
-            --__bg-color: #{$output-disabled-dark-fallback};
-
-            @supports (color: color-mix(in srgb, black, white)) {
-                --__bg-color: color-mix(in srgb, var(--output-clr-dark) 70%, black);
-            }
+            --__bg-color: var(--clr-secondary-800);
         }
     }
 
