@@ -17,7 +17,7 @@
     & textarea{
 
         --__line-height: 1.2;
-        --__nb-lines: 3; // minimum number of lines to show
+        --__nb-lines: var(--lines, 3); // # of lines to show, `--lines` is eventually defined in JSX, if not defaults to 3 lines
         --__padding-block: .5em;
         --__padding-inline: .75em;
 

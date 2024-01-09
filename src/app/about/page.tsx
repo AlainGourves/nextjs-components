@@ -158,6 +158,7 @@ export default function About() {
                     readOnly={false}
                     label="Type your text"
                     labelPosition="right"
+                    nbLines={8}
                 />
             </div>
 
