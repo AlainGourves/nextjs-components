@@ -1,104 +1,183 @@
 'use client'
-import Image from 'next/image'
-import styles from './page.module.css'
+import { useEffect, useState } from 'react'
+import styles from './page.module.scss'
+import Button from './components/button/button'
+import RadioGroup from './components/radioGroup/radioGroup'
+import Select from './components/select/select'
+import Slider from './components/slider/slider'
 import Switch from './components/switch/switch'
-import { useState } from 'react'
+import TextField from './components/textfield/textfield'
 
 export default function Home() {
-  const [checked, setChecked] = useState(false);
-  const handleChange = (ev:any) => {
-    console.log('yé!', ev)
-    setChecked(!checked)
+  const [checked1, setChecked1] = useState(false);
+  const [checked2, setChecked2] = useState(false);
+  const [switchDisabled, setSwitchDisabled] = useState(true);
+  const [sliderValue1, setSliderValue1] = useState(66);
+  const [sliderValue2, setSliderValue2] = useState(50);
+
+  const handleCheck1 = () => {
+    setChecked1(!checked1);
   };
+
+  const handleCheck2 = () => {
+    setChecked2(!checked2)
+  };
+
+  useEffect(() => {
+    setSwitchDisabled(!checked1);
+  }, [checked1])
+
+  const handleSlider1 = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    setSliderValue1(parseInt(ev.target.value));
+  }
+  const handleSlider2 = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    setSliderValue2(parseInt(ev.target.value));
+  }
+
+  const handleBtnClick = (ev: React.MouseEvent<HTMLElement>) => {
+    console.log("Hello there!", ev.target)
+  }
+
+  const pos = 'right';
+
+  const options = [
+    { value: 'option1', text: 'Option 1' },
+    { value: 'option2', text: 'Option 2' },
+    { value: 'option3', text: 'Option 3' },
+    { value: 'option4', text: 'Option 4' },
+  ];
+
+  const radios = [
+    {
+      id: 'hsl',
+      label: 'HSL',
+      value: 'hsl',
+    },
+    {
+      id: 'lch',
+      label: 'LCH',
+      value: 'lch'
+    },
+    {
+      id: 'oklab',
+      label: 'OKLAB',
+      value: 'oklab'
+    },
+    {
+      id: 'xyz',
+      label: 'XYZ',
+      value: 'xyz'
+    }
+  ]
 
 
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
+        <p>My Form's components</p>
+      </div>
+
+      <section className={styles.section}>
         <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+          <Button
+            text="Button"
+            disabled={false}
+            onClick={handleBtnClick}
+          />
+          <Button
+            text="Other"
+            disabled={true}
+            classAdd="small"
+          />
         </div>
-      </div>
+        <div>
+          <Switch
+            id='1234'
+            checked={checked1}
+            onChange={handleCheck1}
+            label='Switch'
+            labelPosition={pos}
+          />
 
-      <div className={styles.center}>
-        <Switch
-          id='1234'
-          label='Coche-moi!'
-          checked={checked}
-          disabled={false}
-          onChange={handleChange}
-        />
-      </div>
+          <Switch
+            id='4567'
+            checked={checked2}
+            onChange={handleCheck2}
+            label='Disabled Switch'
+            labelPosition={pos}
+            disabled={switchDisabled}
+          />
+        </div>
+        <div>
+          <div className={styles['slider-container']}>
+            <Slider
+              id='3456'
+              min={33}
+              max={288}
+              value={sliderValue1}
+              onChange={handleSlider1}
+              label="Slider"
+              labelPosition={pos}
+              isOutput={true}
+            />
+          </div>
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus blanditiis fuga culpa!</p>
+        <div>
+          <div className={styles['slider-container']}>
+            <Slider
+              id='42515'
+              min={0}
+              max={200}
+              value={sliderValue2}
+              onChange={handleSlider2}
+              label="Another Slider"
+              labelPosition='bottom'
+              isOutput={true}
+              disabled={true}
+            />
+          </div>
+        </div>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+        <div>
+          <Select
+            id="mySelect"
+            label="Select Menu"
+            options={options}
+            disabled={false}
+            selected={3}
+          />
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+          <Select
+            id="mySelectDisabled"
+            label="Disabled Select Menu"
+            options={options}
+            disabled={true}
+            selected={0}
+          />
+        </div>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
+        <div>
+          <TextField
+            id="myTextField"
+            disabled={false}
+            readOnly={false}
+            label="Type your text"
+            labelPosition="right"
+            nbLines={8}
+          />
+        </div>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+        <div>
+          <RadioGroup radios={radios}
+            label="Radio Group"
+            labelPosition="top"
+            disabled={false}
+            small={false} />
+        </div>
+      </section>
+
+
     </main>
   )
 }

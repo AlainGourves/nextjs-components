@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
-import Radio from "./radio";
+import { useState } from "react";
 import '../component-global.scss';
 import radioGroupStyles from './radioGroup.module.scss';
+import Radio from "./radio";
 import { RadioType } from "./radio";
 
 export default function RadioGroup(props: any) {
     const defaultValue = 'hsl';
     const groupName = 'color-space';
+    let labelPos: string | undefined = undefined;
     const [value, setValue] = useState(defaultValue);
 
     const handleRadioGroup = (ev: any) => {
         setValue(ev.target.value);
     }
 
-    let labelPos: string | undefined = undefined;
     if (props.labelPosition) {
         switch (props.labelPosition) {
             case 'top':
@@ -27,7 +27,6 @@ export default function RadioGroup(props: any) {
                 break;
             default:
                 // 'left' is default position for the label
-                labelPos = undefined;
                 break;
         }
     }
