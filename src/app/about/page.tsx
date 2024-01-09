@@ -164,8 +164,9 @@ export default function About() {
             <div>
             <RadioGroup radios={radios}
                 label="Radio Group"
+                labelPosition="top"
                 disabled={false}
-                small={false} />
+                small={true} />
             </div>
         </main>
     )

@@ -13,11 +13,31 @@ export default function RadioGroup(props: any) {
         setValue(ev.target.value);
     }
 
+    let labelPos: string | undefined = undefined;
+    if (props.labelPosition) {
+        switch (props.labelPosition) {
+            case 'top':
+                labelPos = 'label-above';
+                break;
+            case 'right':
+                labelPos = 'label-right';
+                break;
+            case 'bottom':
+                labelPos = 'label-under';
+                break;
+            default:
+                // 'left' is default position for the label
+                labelPos = undefined;
+                break;
+        }
+    }
+
     return (
         <fieldset
             className={`agf-component
                 ${radioGroupStyles['agf-radios']}
-                ${(props.small) ? radioGroupStyles['small'] : null} `}
+                ${(labelPos) ?? labelPos}
+                ${(props.small) ? radioGroupStyles['small']:''} `}
             onInput={handleRadioGroup}
             disabled={props.disabled ?? true}
         >
