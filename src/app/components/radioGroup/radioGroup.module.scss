@@ -11,6 +11,25 @@
     width: 100%;
     font-size: 1em;
 
+    &:disabled{
+        & label{
+            border-color: var(--clr-inactive-bdr);
+            background-color: var(--clr-inactive-bg);
+            &:has(:checked) {
+                background-color: var(--clr-inactive-bdr);
+            }
+            &:first-of-type{
+                border-inline-start-color: var(--clr-inactive-bdr);
+            }
+            &:not(:first-of-type) {
+                border-left-color: var(--clr-inactive-bdr);
+            }
+            &:last-of-type{
+                border-inline-end-color: var(--clr-inactive-bdr);
+            }
+        }
+    }
+
     & div.radio-group {
         display: flex;
         flex-wrap: wrap;
@@ -25,6 +44,7 @@
         place-content: center;
         user-select: none;
         border-block: 1px solid var(--__clr-border);
+        color: var(--clr-active);
 
 
         background: var(--clr-active-100);
@@ -53,13 +73,6 @@
             border-top-right-radius: calc(var(--__height) / 2);
             border-bottom-right-radius: calc(var(--__height) / 2);
             padding-inline-end: calc(var(--__padding-inline) + (var(--__height) / 4));
-        }
-    }
-
-    & .legend{
-        color: red;
-        &:hover{
-            cursor: initial;
         }
     }
 

@@ -2,14 +2,7 @@ import { useEffect, useState } from "react";
 import Radio from "./radio";
 import '../component-global.scss';
 import radioGroupStyles from './radioGroup.module.scss';
-
-type RadioType = {
-    id: string,
-    label: string,
-    groupName: string,
-    value: string,
-    checked?: boolean | undefined,
-}
+import { RadioType } from "./radio";
 
 export default function RadioGroup(props: any) {
     const defaultValue = 'hsl';
@@ -22,25 +15,30 @@ export default function RadioGroup(props: any) {
 
     return (
         <fieldset
-            className={`agf-component ${radioGroupStyles['agf-radios']}`}
+            className={`agf-component
+                ${radioGroupStyles['agf-radios']}
+                ${(props.small) ? radioGroupStyles['small'] : null} `}
             onInput={handleRadioGroup}
+            disabled={props.disabled ?? true}
         >
-            <div className={radioGroupStyles['legend']}>Légendaire légende</div>
+            {props.label ?? (
+                <div className={radioGroupStyles['legend']}>{props.label}</div>
+            )}
             <div className={radioGroupStyles['radio-group']} >
-            {
-                props.radios.map((radio :RadioType) => {
-                    return (
-                        <Radio
-                            key={radio.id}
-                            id={radio.id}
-                            label={radio.label}
-                            value={radio.value}
-                            groupName={groupName}
-                            checked={(radio.value === value) ?? true}
-                        />
-                    )
-                })
-            }
+                {
+                    props.radios.map((radio: RadioType) => {
+                        return (
+                            <Radio
+                                key={radio.id}
+                                id={radio.id}
+                                label={radio.label}
+                                value={radio.value}
+                                groupName={groupName}
+                                checked={(radio.value === value) ?? true}
+                            />
+                        )
+                    })
+                }
             </div>
         </fieldset >
     )

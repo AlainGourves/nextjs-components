@@ -1,4 +1,4 @@
-type RadioType = {
+export type RadioType = {
     id: string,
     label: string,
     groupName: string,

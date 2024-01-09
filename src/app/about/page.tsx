@@ -1,11 +1,12 @@
 'use client'
+import { useState, useEffect } from 'react';
 import styles from '../page.module.css'
 import Switch from '../components/switch/switch'
 import Slider from '../components/slider/slider';
 import Button from '../components/button/button';
-import { useState, useEffect } from 'react';
 import Select from '../components/select/select';
 import TextField from '../components/textfield/textfield';
+import RadioGroup from '../components/radioGroup/radioGroup';
 
 export default function About() {
     const [checked1, setChecked1] = useState(false);
@@ -45,6 +46,29 @@ export default function About() {
         { value: 'option3', text: 'Option 3' },
         { value: 'option4', text: 'Option 4' },
     ];
+
+    const radios = [
+        {
+            id: 'hsl',
+            label: 'HSL',
+            value: 'hsl',
+        },
+        {
+            id: 'lch',
+            label: 'LCH',
+            value: 'lch'
+        },
+        {
+            id: 'oklab',
+            label: 'OKLAB',
+            value: 'oklab'
+        },
+        {
+            id: 'xyz',
+            label: 'XYZ',
+            value: 'xyz'
+        }
+    ]
 
     return (
         <main className={styles.main}>
@@ -135,6 +159,13 @@ export default function About() {
                     label="Type your text"
                     labelPosition="right"
                 />
+            </div>
+
+            <div>
+            <RadioGroup radios={radios}
+                label="Radio Group"
+                disabled={false}
+                small={false} />
             </div>
         </main>
     )
