@@ -1,7 +1,7 @@
 export type RadioType = {
     id: string,
     label: string,
-    groupName: string,
+    groupName?: string,
     value: string,
     checked?: boolean | undefined,
 }

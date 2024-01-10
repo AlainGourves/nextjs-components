@@ -35,10 +35,10 @@ export default function Home() {
   }
 
   const handleBtnClick = (ev: React.MouseEvent<HTMLElement>) => {
-    console.log("Hello there!", ev.target)
+    console.log("Hello there!")
   }
 
-  const pos = 'right';
+  const pos = 'left';
 
   const options = [
     { value: 'option1', text: 'Option 1' },
@@ -47,6 +47,8 @@ export default function Home() {
     { value: 'option4', text: 'Option 4' },
   ];
 
+  const radioGroupName = 'color-space';
+  const radioDefaultValue = 'xyz';
   const radios = [
     {
       id: 'hsl',
@@ -69,7 +71,15 @@ export default function Home() {
       value: 'xyz'
     }
   ]
+  const [radioGroupValue, setRadioGroupValue] = useState<string>(radioDefaultValue);
 
+  const handleRadioGroup = (ev: any) => {
+    setRadioGroupValue(ev.target.value);
+  }
+
+  useEffect(() => {
+    console.log(`Color-space: ${radioGroupValue}`)
+  }, [radioGroupValue]);
 
   return (
     <main className={styles.main}>
@@ -86,8 +96,9 @@ export default function Home() {
           />
           <Button
             text="Other"
-            disabled={true}
-            classAdd="small"
+            disabled={false}
+            onClick={handleBtnClick}
+            classAdd={["small", "outlined"]}
           />
         </div>
         <div>
@@ -132,7 +143,7 @@ export default function Home() {
               value={sliderValue2}
               onChange={handleSlider2}
               label="Another Slider"
-              labelPosition='bottom'
+              labelPosition='top'
               isOutput={true}
               disabled={true}
             />
@@ -169,11 +180,16 @@ export default function Home() {
         </div>
 
         <div>
-          <RadioGroup radios={radios}
+          <RadioGroup
+            radios={radios}
+            groupName={radioGroupName}
+            defaultValue={radioDefaultValue}
+            onInput={handleRadioGroup}
             label="Radio Group"
             labelPosition="top"
             disabled={false}
-            small={false} />
+            // classAdd={'small'}
+          />
         </div>
       </section>
 
