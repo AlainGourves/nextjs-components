@@ -48,7 +48,7 @@
         transition: opacity 1s, transform 0.5s;
     }
 
-    &:active {
+    &:not(:disabled):active {
         transform: translateY(1px);
 
         &::after {
@@ -81,5 +81,22 @@
         padding: 0.25em 0.5em;
         line-height: 1;
         border-width: 1px;
+    }
+
+    &-outlined{
+        background-color: var(--clr-active-50);
+        border-width: 1px;
+        border-color: var(--clr-active);
+        color: var(--clr-active);
+
+        @media (hover:hover) {
+            &::after{
+                background-color: #fff;
+            }
+            &:not(:disabled):hover{
+                background-color: var(--clr-active);
+                color: #fff;
+            }
+        }
     }
 }
