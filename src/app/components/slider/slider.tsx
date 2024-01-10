@@ -3,7 +3,7 @@
 import '../component-global.scss';
 import sliderStyles from './slider.module.scss';
 
-interface Props {
+type SliderProps = {
     id: string,
     value: number,
     min: number,
@@ -15,7 +15,7 @@ interface Props {
     onChange: React.ChangeEventHandler<HTMLInputElement>
 }
 
-export default function Slider({ id, value, min, max, label, labelPosition, isOutput = false, disabled=undefined, onChange }: Props) {
+export default function Slider({ id, value, min, max, label, labelPosition, isOutput = false, disabled=undefined, onChange }: SliderProps) {
 
     let labelPos: string | undefined = undefined;
     if (labelPosition) {
@@ -31,7 +31,6 @@ export default function Slider({ id, value, min, max, label, labelPosition, isOu
                 break;
             default:
                 // 'left' is default position for the label
-                labelPos = undefined;
                 break;
         }
     }
