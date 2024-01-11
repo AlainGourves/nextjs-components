@@ -51,11 +51,13 @@
 
         }
     }
-    
+
     &-small {
         --__arrow-size: 1.125em;
         --__padding: .2em;
-        font-size:.75em;
-        line-height: 1;
+        & select{
+            font-size:.75em;
+            line-height: 1;
+        }
     }
 }

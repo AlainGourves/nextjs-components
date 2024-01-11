@@ -1,6 +1,5 @@
 .agf-textfield {
 
-
     // ----------------------------- Layout
     display: flex;
     align-items: center;
@@ -13,9 +12,11 @@
     border-radius: .4em;
     padding: .5em 1em;
 
+    &>div {
+        position: relative;
+    }
 
-    & textarea{
-
+    & textarea {
         --__line-height: 1.2;
         --__nb-lines: var(--lines, 3); // # of lines to show, `--lines` is eventually defined in JSX, if not defaults to 3 lines
         --__padding-block: .5em;
@@ -24,7 +25,7 @@
         appearance: none;
         font-family: inherit;
         font-weight: normal;
-        color:  var(--clr-active-900);
+        color: var(--clr-active-900);
         font-size: 1em;
         font-size: max(16px, 1em);
         line-height: var(--__line-height);
@@ -42,9 +43,9 @@
 
 
         box-shadow:
-        0 0 1px 0 rgb(0 0 0 / 0.2),
-        0 0 2px 0 rgb(0 0 0 / 0.14),
-        0 0 5px 0 rgb(0 0 0 / 0.12);
+            0 0 1px 0 rgb(0 0 0 / 0.2),
+            0 0 2px 0 rgb(0 0 0 / 0.14),
+            0 0 5px 0 rgb(0 0 0 / 0.12);
 
         &:active,
         &:focus-visible {
@@ -58,17 +59,33 @@
             color: var(--clr-inactive-bdr);
             box-shadow: none;
         }
+
+        &::placeholder {
+            font-style: italic;
+            color: var(--clr-active-250);
+        }
     }
 
+    & .erase {
+        position: absolute;
+        padding: 1.5rem;
+        aspect-ratio: 1;
+        background: none;
+        border-radius: 50%;
+        margin-block-start: .25em;
+        margin-inline-end: .25em;
+        top: 0;
+        right: 0;
+        opacity: .5;
+        display: grid;
+        place-content: center;
+        transition: background var(--anim-dur) linear,
+        opacity var(--anim-dur) var(--anim-fn);
+        cursor: pointer;
 
-    // @media (hover:hover) {
-
-    //     // CSS hover style remains after button click in iOS devices
-    //     // https://stackoverflow.com/questions/47507495/css-hover-style-remains-after-button-click-in-ios-devices
-    //     &:not(:disabled):hover {
-    //         color: var(--clr-active);
-    //         background-color: #fff;
-    //         border-color: var(--clr-active);
-    //     }
-    // }
+        &:hover{
+            background: red;
+            opacity: 1;
+        }
+    }
 }

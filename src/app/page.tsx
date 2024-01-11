@@ -90,6 +90,16 @@ export default function Home() {
     console.log(`Color-space: ${radioGroupValue}`)
   }, [radioGroupValue]);
 
+  const textfieldDefaultValue = "C'était à Mégara, faubourg de Carthage, dans les jardins d'Hamilcar."
+  const [textfieldValue, setTextfieldValue] = useState(textfieldDefaultValue);
+  const handleTextfield = (ev: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTextfieldValue(ev.target.value);
+  }
+
+  useEffect(() => {
+    console.log(`textField: ${textfieldValue}`)
+  }, [textfieldValue]);
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -167,7 +177,7 @@ export default function Home() {
             defaultValue={selectDefaultValue}
             onChange={handleSelectChange}
             disabled={false}
-            />
+          />
 
           <Select
             id="mySelectDisabled"
@@ -186,6 +196,9 @@ export default function Home() {
             id="myTextField"
             disabled={false}
             readOnly={false}
+            defaultValue={textfieldDefaultValue}
+            placeholder='Type here...'
+            onChange={handleTextfield}
             label="Type your text"
             labelPosition="right"
             nbLines={8}
