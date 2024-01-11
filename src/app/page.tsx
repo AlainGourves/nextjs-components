@@ -46,6 +46,15 @@ export default function Home() {
     { value: 'option3', text: 'Option 3' },
     { value: 'option4', text: 'Option 4' },
   ];
+  const selectDefaultValue = 'option2';
+  const [selectValue, setSelectValue] = useState(selectDefaultValue);
+  const handleSelectChange = (ev: any) => {
+    const newVal = ev.target.value;
+    setSelectValue(newVal);
+  }
+  useEffect(() => {
+    console.log(`Select value: ${selectValue}`);
+  }, [selectValue]);
 
   const radioGroupName = 'color-space';
   const radioDefaultValue = 'xyz';
@@ -155,16 +164,19 @@ export default function Home() {
             id="mySelect"
             label="Select Menu"
             options={options}
+            defaultValue={selectDefaultValue}
+            onChange={handleSelectChange}
             disabled={false}
-            selected={3}
-          />
+            />
 
           <Select
             id="mySelectDisabled"
             label="Disabled Select Menu"
             options={options}
+            defaultValue={options[0].value}
+            onChange={handleSelectChange}
+            labelPosition='right'
             disabled={true}
-            selected={0}
           />
         </div>
 
@@ -188,7 +200,7 @@ export default function Home() {
             label="Radio Group"
             labelPosition="top"
             disabled={false}
-            // classAdd={'small'}
+          // classAdd={'small'}
           />
         </div>
       </section>

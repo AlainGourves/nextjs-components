@@ -8,44 +8,62 @@ type Option = {
     text: string
 }
 
-type Props = {
+type SelectProps = {
     id: string,
     label: string,
     options: Option[],
-    disabled: boolean,
-    selected?: number,
+    defaultValue: string,
+    onChange(event: any): void;
+    disabled?: boolean,
+    labelPosition?: 'top' | 'right' | 'bottom' | 'left',
+    classAdd?: string | string[] | undefined
 }
 
 
-export default function Select(props: Props) {
+export default function Select(props: SelectProps) {
     const selectRef = useRef<HTMLSelectElement | null>(null);
-    const [selectedVal, setSelectedVal] = useState(0);
 
-    useEffect(() => {
-        if (props.selected && props.selected !== 0) {
-            setSelectedVal(props.selected)
-        };
-        //     const sty = window.getComputedStyle(selectRef.current as Element).backgroundImage
-        //     console.log('>>>', sty)
-    }, [])
+    let labelPos: string | undefined = undefined;
+    if (props.labelPosition) {
+        switch (props.labelPosition) {
+            case 'top':
+                labelPos = 'label-above';
+                break;
+            case 'right':
+                labelPos = 'label-right';
+                break;
+            case 'bottom':
+                labelPos = 'label-under';
+                break;
+            default:
+                // 'left' is default position for the label
+                break;
+        }
+    }
 
-    const handleChange = (ev: any) => {
-        const newVal = ev.target.value;
-        const newIdx = props.options.findIndex((item) => item.value === newVal);
-        setSelectedVal(newIdx);
+    let className = `agf-component ${selectStyles['agf-select']} `;
+    if (labelPos) className += labelPos;
+    if (props.classAdd) {
+        className += ' ';
+        if (typeof props.classAdd === 'string') {
+            className += selectStyles[`agf-select-${props.classAdd}`];
+        }
+        if (Array.isArray(props.classAdd)) {
+            className += props.classAdd.map((cls: string) => selectStyles[`agf-select-${cls}`]).join(' ');
+        }
     }
 
     return (
         <label
             htmlFor={props.id}
-            className={`agf-component ${selectStyles['agf-select']}`}>
+            className={className}>
             {props.label && props.label}
             <select
                 id={props.id}
                 name={props.id}
                 ref={selectRef}
-                onChange={handleChange}
-                value={props.options[selectedVal]?.value}
+                onChange={props.onChange}
+                defaultValue={props.defaultValue}
                 disabled={props.disabled}
             >
                 {
