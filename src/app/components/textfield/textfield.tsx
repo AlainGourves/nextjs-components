@@ -6,16 +6,16 @@ import { useRef } from 'react';
 type TextFieldProps = {
     id: string,
     label?: string | null,
-    defautValue: string | null,
+    defaultValue: string | undefined,
     nbLines?: number,
-    placeholder?: string | null,
+    placeholder?: string | undefined,
     labelPosition?: 'top' | 'right' | 'bottom' | 'left',
     disabled?: boolean | undefined,
     readOnly?: boolean | undefined,
-    onChange: React.ChangeEvent<HTMLTextAreaElement>
+    onChange: React.ChangeEventHandler<HTMLTextAreaElement>
 }
 
-export default function TextField(props: any) {
+export default function TextField(props: TextFieldProps) {
 
     const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -45,10 +45,6 @@ export default function TextField(props: any) {
     let className = `agf-component ${textFieldStyle['agf-textfield']} `;
     if (labelPos) className += labelPos;
 
-    // const toto
-
-    // TODO: readonly
-
     return (
         <label htmlFor={props.id}
             className={className}
@@ -62,18 +58,21 @@ export default function TextField(props: any) {
                     defaultValue={props.defaultValue}
                     onChange={props.onChange}
                     disabled={props.disabled}
-                    readOnly={props.readonly}
+                    readOnly={props.readOnly}
                     placeholder={props.placeholder ?? props.placeholder}
                     ref={textAreaRef}
                 ></textarea>
-                <button
-                    className={textFieldStyle.erase}
-                    onClick={ev => {
-                        if (textAreaRef.current) {
-                            textAreaRef.current.value = ''
-                        }
-                    }}>X
-                </button>
+                {!props.readOnly ?
+                    <button
+                        className={textFieldStyle.erase}
+                        title='Clear text'
+                        onClick={ev => {
+                            ev.stopPropagation();
+                            if (textAreaRef.current) {
+                                textAreaRef.current.value = ''
+                            }
+                        }}></button>
+                    : null}
             </div>
         </label>
     )
