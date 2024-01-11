@@ -177,6 +177,7 @@ export default function Home() {
             onChange={handleSelectChange}
             labelPosition='right'
             disabled={true}
+            classAdd={'small'}
           />
         </div>
 
