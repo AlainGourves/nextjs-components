@@ -2,40 +2,52 @@
 import '../component-global.scss';
 import switchStyles from './switch.module.scss';
 
-export default function Switch(props: any) {
-    let labelPosition: string|undefined;
+type SwitchProps={
+    id: string,
+    label: string,
+    onChange: React.ChangeEventHandler<HTMLInputElement>
+    checked?: boolean | undefined,
+    labelPosition?: 'top' | 'right' | 'bottom' | 'left',
+    disabled?: boolean | undefined,
+}
+
+export default function Switch(props: SwitchProps) {
+
+    let labelPos: string | undefined = undefined;
     if (props.labelPosition) {
         switch (props.labelPosition) {
             case 'top':
-                labelPosition = 'label-above';
+                labelPos = 'label-above';
                 break;
             case 'right':
-                labelPosition = 'label-right';
+                labelPos = 'label-right';
                 break;
             case 'bottom':
-                labelPosition = 'label-under';
+                labelPos = 'label-under';
                 break;
             default:
                 // 'left' is default position for the label
-                labelPosition = undefined;
                 break;
         }
     }
 
+    let className = `agf-component ${switchStyles['agf-switch']} `;
+    if (labelPos) className += labelPos;
+
     return (
         <label
             htmlFor={props.id}
-            className={`agf-component  ${switchStyles['agf-switch']} ${labelPosition ? switchStyles[labelPosition]:null}`}
+            className={className}
         >
             <span>{props.label}</span>
             <input
                 type='checkbox'
                 role='switch'
                 id={props.id}
-                disabled={(props.disabled) ? props.disabled : false}
-                aria-disabled={(props.disabled) ? props.disabled : false}
+                disabled={(props.disabled) ? props.disabled : undefined}
+                aria-disabled={(props.disabled) ? props.disabled : undefined}
                 checked={props.checked}
-                onChange={(props.onChange) ? props.onChange : null}
+                onChange={props.onChange}
             />
         </label>
     )

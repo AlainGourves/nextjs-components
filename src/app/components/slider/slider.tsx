@@ -10,12 +10,12 @@ type SliderProps = {
     max: number,
     label?: string | null,
     labelPosition?: 'top' | 'right' | 'bottom' | 'left',
-    isOutput: boolean,
+    isOutput?: boolean | undefined,
     disabled?: boolean | undefined,
     onChange: React.ChangeEventHandler<HTMLInputElement>
 }
 
-export default function Slider({ id, value, min, max, label, labelPosition, isOutput = false, disabled=undefined, onChange }: SliderProps) {
+export default function Slider({ id, value, min, max, label, labelPosition, isOutput = undefined, disabled=undefined, onChange }: SliderProps) {
 
     let labelPos: string | undefined = undefined;
     if (labelPosition) {
@@ -35,6 +35,9 @@ export default function Slider({ id, value, min, max, label, labelPosition, isOu
         }
     }
 
+    let className = `agf-component ${sliderStyles['agf-slider']} `;
+    if (labelPos) className += labelPos;
+
     // "normamize" the slider's value between 0 & 100
     const lerp = (val: number) => {
         return (100 * (val - min)) / (max - min);
@@ -44,8 +47,8 @@ export default function Slider({ id, value, min, max, label, labelPosition, isOu
         <>
             <label
                 htmlFor={id}
-                className={`agf-component ${sliderStyles['agf-slider']} ${labelPos ? labelPos : null}`}
-                style={{ '--slider-value': `${lerp(value)}` } as any}
+                className={className}
+                style={{ '--slider-value': `${lerp(value)}` } as React.CSSProperties}
             >
                 <span>{label}</span>
                 <div>
