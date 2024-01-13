@@ -3,8 +3,9 @@ import '../component-global.scss';
 import radioGroupStyles from './radioGroup.module.scss';
 import Radio from "./radio";
 import { RadioType } from "./radio";
+import { getClassName } from '../utils'
 
-type RadioGroupProps= {
+type RadioGroupProps = {
     radios: RadioType[],
     defaultValue: string,
     groupName: string,
@@ -17,26 +18,9 @@ type RadioGroupProps= {
 
 export default function RadioGroup(props: RadioGroupProps) {
 
-    let labelPos: string | undefined = undefined;
-    if (props.labelPosition) {
-        switch (props.labelPosition) {
-            case 'top':
-                labelPos = 'label-above';
-                break;
-            case 'right':
-                labelPos = 'label-right';
-                break;
-            case 'bottom':
-                labelPos = 'label-under';
-                break;
-            default:
-                // 'left' is default position for the label
-                break;
-        }
-    }
 
-    let className= `agf-component ${radioGroupStyles['agf-radios']} `;
-    if (labelPos) className += labelPos;
+    let className = getClassName(radioGroupStyles['agf-radios'], props.labelPosition);
+
     if (props.classAdd) {
         className += ' ';
         if (typeof props.classAdd === 'string') {

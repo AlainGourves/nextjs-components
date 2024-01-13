@@ -1,7 +1,8 @@
 'use client'
 import '../component-global.scss';
 import selectStyles from './select.module.scss';
-import { useState, useRef, useEffect } from 'react';
+import { useRef } from 'react';
+import { getClassName } from '../utils'
 
 type Option = {
     value: string,
@@ -23,26 +24,8 @@ type SelectProps = {
 export default function Select(props: SelectProps) {
     const selectRef = useRef<HTMLSelectElement | null>(null);
 
-    let labelPos: string | undefined = undefined;
-    if (props.labelPosition) {
-        switch (props.labelPosition) {
-            case 'top':
-                labelPos = 'label-above';
-                break;
-            case 'right':
-                labelPos = 'label-right';
-                break;
-            case 'bottom':
-                labelPos = 'label-under';
-                break;
-            default:
-                // 'left' is default position for the label
-                break;
-        }
-    }
+    let className = getClassName(selectStyles['agf-select'], props.labelPosition);
 
-    let className = `agf-component ${selectStyles['agf-select']} `;
-    if (labelPos) className += labelPos;
     if (props.classAdd) {
         className += ' ';
         if (typeof props.classAdd === 'string') {

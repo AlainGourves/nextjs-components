@@ -2,6 +2,7 @@
 import '../component-global.scss';
 import textFieldStyle from './textfield.module.scss';
 import { useRef } from 'react';
+import {getClassName} from '../utils'
 
 type TextFieldProps = {
     id: string,
@@ -26,25 +27,12 @@ export default function TextField(props: TextFieldProps) {
         style = { '--lines': props.nbLines } as React.CSSProperties;
     }
 
-    let labelPos: string | undefined = undefined;
-    if (props.labelPosition) {
-        switch (props.labelPosition) {
-            case 'top':
-                labelPos = 'label-above';
-                break;
-            case 'right':
-                labelPos = 'label-right';
-                break;
-            case 'bottom':
-                labelPos = 'label-under';
-                break;
-            default:
-                // 'left' is default position for the label
-                break;
-        }
+    const className = getClassName(textFieldStyle['agf-textfield'], props.labelPosition);
+
+    let btnClassName = textFieldStyle.erase;
+    if (props.readOnly || (!props.value || props.value.length === 0)) {
+        btnClassName += ` ${textFieldStyle.hidden}`
     }
-    let className = `agf-component ${textFieldStyle['agf-textfield']} `;
-    if (labelPos) className += labelPos;
 
     return (
         <label htmlFor={props.id}
@@ -63,14 +51,12 @@ export default function TextField(props: TextFieldProps) {
                     placeholder={props.placeholder ?? props.placeholder}
                     ref={textAreaRef}
                 ></textarea>
-                {!props.readOnly && (props.value && props.value.length > 0) ?
                     <button
-                        className={textFieldStyle.erase}
+                        className={btnClassName}
                         title='Clear text'
                         tabIndex={-1} // button is not focusable
                         onClick={props.reset}
                     ></button>
-                    : null}
             </div>
         </label>
     )

@@ -1,6 +1,7 @@
 'use client'
 import '../component-global.scss';
 import switchStyles from './switch.module.scss';
+import {getClassName} from '../utils'
 
 type SwitchProps={
     id: string,
@@ -13,26 +14,7 @@ type SwitchProps={
 
 export default function Switch(props: SwitchProps) {
 
-    let labelPos: string | undefined = undefined;
-    if (props.labelPosition) {
-        switch (props.labelPosition) {
-            case 'top':
-                labelPos = 'label-above';
-                break;
-            case 'right':
-                labelPos = 'label-right';
-                break;
-            case 'bottom':
-                labelPos = 'label-under';
-                break;
-            default:
-                // 'left' is default position for the label
-                break;
-        }
-    }
-
-    let className = `agf-component ${switchStyles['agf-switch']} `;
-    if (labelPos) className += labelPos;
+    const className = getClassName(switchStyles['agf-switch'], props.labelPosition);
 
     return (
         <label

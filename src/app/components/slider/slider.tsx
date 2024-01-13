@@ -2,6 +2,7 @@
 'use client'
 import '../component-global.scss';
 import sliderStyles from './slider.module.scss';
+import {getClassName} from '../utils'
 
 type SliderProps = {
     id: string,
@@ -17,26 +18,7 @@ type SliderProps = {
 
 export default function Slider({ id, value, min, max, label, labelPosition, isOutput = undefined, disabled=undefined, onChange }: SliderProps) {
 
-    let labelPos: string | undefined = undefined;
-    if (labelPosition) {
-        switch (labelPosition) {
-            case 'top':
-                labelPos = 'label-above';
-                break;
-            case 'right':
-                labelPos = 'label-right';
-                break;
-            case 'bottom':
-                labelPos = 'label-under';
-                break;
-            default:
-                // 'left' is default position for the label
-                break;
-        }
-    }
-
-    let className = `agf-component ${sliderStyles['agf-slider']} `;
-    if (labelPos) className += labelPos;
+    const className = getClassName(sliderStyles['agf-slider'], labelPosition);
 
     // "normamize" the slider's value between 0 & 100
     const lerp = (val: number) => {
