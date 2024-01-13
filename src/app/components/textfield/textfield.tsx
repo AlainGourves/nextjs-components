@@ -6,13 +6,14 @@ import { useRef } from 'react';
 type TextFieldProps = {
     id: string,
     label?: string | null,
-    defaultValue: string | undefined,
+    value: string | undefined,
     nbLines?: number,
     placeholder?: string | undefined,
     labelPosition?: 'top' | 'right' | 'bottom' | 'left',
     disabled?: boolean | undefined,
     readOnly?: boolean | undefined,
-    onChange: React.ChangeEventHandler<HTMLTextAreaElement>
+    onChange: React.ChangeEventHandler<HTMLTextAreaElement>,
+    reset: React.MouseEventHandler<HTMLButtonElement>,
 }
 
 export default function TextField(props: TextFieldProps) {
@@ -55,23 +56,20 @@ export default function TextField(props: TextFieldProps) {
 
                 <textarea
                     id={props.id}
-                    defaultValue={props.defaultValue}
+                    value={props.value}
                     onChange={props.onChange}
                     disabled={props.disabled}
                     readOnly={props.readOnly}
                     placeholder={props.placeholder ?? props.placeholder}
                     ref={textAreaRef}
                 ></textarea>
-                {!props.readOnly ?
+                {!props.readOnly && (props.value && props.value.length > 0) ?
                     <button
                         className={textFieldStyle.erase}
                         title='Clear text'
-                        onClick={ev => {
-                            ev.stopPropagation();
-                            if (textAreaRef.current) {
-                                textAreaRef.current.value = ''
-                            }
-                        }}></button>
+                        tabIndex={-1} // button is not focusable
+                        onClick={props.reset}
+                    ></button>
                     : null}
             </div>
         </label>

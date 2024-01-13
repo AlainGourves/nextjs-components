@@ -29,7 +29,7 @@
         font-size: 1em;
         font-size: max(16px, 1em);
         line-height: var(--__line-height);
-        padding: var(--__padding-block) var(--__padding-inline);
+        padding: var(--__padding-block) 1.25em var(--__padding-block) var(--__padding-inline);
         border: 1px solid var(--clr-inactive-bdr);
         border-radius: var(--bdr-radius);
         background: var(--clr-active-50);
@@ -77,8 +77,8 @@
         background-image: url("data:image/svg+xml,%3Csvg height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 6 12 12' /%3E%3Cpath d='m17.9591 6-12 12' /%3E%3C/g%3E%3C/svg%3E");
         background-size: cover;
         border-radius: calc(var(--__w)/2);
-        margin-block-start: calc(var(--__w)/2);
-        margin-inline-end: calc(var(--__w)/2);
+        margin-block-start: calc(var(--__w)/4);
+        margin-inline-end: calc(var(--__w)/4);
         top: 0;
         right: 0;
         display: grid;
@@ -86,7 +86,7 @@
         transition: background-color var(--anim-dur) linear;
         cursor: pointer;
 
-        &:hover{
+        &:hover {
             background-color: var(--clr-inactive-bg);
         }
     }

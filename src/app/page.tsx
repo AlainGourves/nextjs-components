@@ -90,11 +90,13 @@ export default function Home() {
     console.log(`Color-space: ${radioGroupValue}`)
   }, [radioGroupValue]);
 
-  const textfieldDefaultValue = "C'était à Mégara, faubourg de Carthage, dans les jardins d'Hamilcar."
-  const [textfieldValue, setTextfieldValue] = useState(textfieldDefaultValue);
+  let textfieldDefaultValue =undefined;
+  textfieldDefaultValue = "C'était à Mégara, faubourg de Carthage, dans les jardins d'Hamilcar."
+  const [textfieldValue, setTextfieldValue] = useState(textfieldDefaultValue ? textfieldDefaultValue : '');
   const handleTextfield = (ev: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextfieldValue(ev.target.value);
   }
+  const resetTextField = (ev:React.MouseEvent<HTMLButtonElement>) => setTextfieldValue('');
 
   useEffect(() => {
     console.log(`textField: ${textfieldValue}`)
@@ -196,9 +198,10 @@ export default function Home() {
             id="myTextField"
             disabled={false}
             readOnly={false}
-            defaultValue={textfieldDefaultValue}
+            value={textfieldValue}
             placeholder='Type here...'
             onChange={handleTextfield}
+            reset={resetTextField}
             label="Type your text"
             labelPosition="right"
             nbLines={8}
