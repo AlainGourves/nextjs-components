@@ -7,6 +7,7 @@ import Select from './components/select/select'
 import Slider from './components/slider/slider'
 import Switch from './components/switch/switch'
 import TextField from './components/textfield/textfield'
+import TextInput from './components/textInput/textInput'
 
 export default function Home() {
   const [checked1, setChecked1] = useState(false);
@@ -90,6 +91,7 @@ export default function Home() {
     console.log(`Color-space: ${radioGroupValue}`)
   }, [radioGroupValue]);
 
+  // TextField
   let textfieldDefaultValue =undefined;
   textfieldDefaultValue = "C'était à Mégara, faubourg de Carthage, dans les jardins d'Hamilcar."
   const [textfieldValue, setTextfieldValue] = useState(textfieldDefaultValue ? textfieldDefaultValue : '');
@@ -101,6 +103,16 @@ export default function Home() {
   useEffect(() => {
     console.log(`textField: ${textfieldValue}`)
   }, [textfieldValue]);
+
+  // TextInput
+  const [inputValue, setInputValue] = useState('');
+  const handleInput = (ev: React.ChangeEvent<HTMLInputElement>)=>{
+    setInputValue(ev.target.value);
+  }
+
+    useEffect(() => {
+      console.log(`Input: ${inputValue}`)
+    }, [inputValue]);
 
   return (
     <main className={styles.main}>
@@ -205,7 +217,7 @@ export default function Home() {
             label="Type your text"
             labelPosition="right"
             nbLines={8}
-          />
+            />
         </div>
 
         <div>
@@ -217,7 +229,19 @@ export default function Home() {
             label="Radio Group"
             labelPosition="top"
             disabled={false}
-          // classAdd={'small'}
+            // classAdd={'small'}
+            />
+        </div>
+
+        <div>
+          <TextInput
+              id="myInput"
+              disabled={false}
+              value={inputValue}
+              readOnly={false}
+              placeholder='Type here...'
+              onChange={handleInput}
+              label="My input"
           />
         </div>
       </section>
