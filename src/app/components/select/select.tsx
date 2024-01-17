@@ -14,7 +14,7 @@ type SelectProps = {
     label: string,
     options: Option[],
     defaultValue: string,
-    onChange(event: any): void;
+    onChange(event: React.FormEvent<HTMLSelectElement>): void;
     disabled?: boolean,
     labelPosition?: 'top' | 'right' | 'bottom' | 'left',
     classAdd?: string | string[] | undefined
