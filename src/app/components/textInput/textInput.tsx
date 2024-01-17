@@ -24,7 +24,7 @@ export default function TextInput(props: TextInputProps) {
         <label htmlFor={props.id}
             className={className}
         >
-            <span>{props.label}</span>
+            {props.label && (<span>props.label</span>)}
             <input
                 type="text"
                 id={props.id}

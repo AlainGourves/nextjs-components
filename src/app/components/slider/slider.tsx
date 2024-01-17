@@ -32,7 +32,7 @@ export default function Slider({ id, value, min, max, label, labelPosition, isOu
                 className={className}
                 style={{ '--slider-value': `${lerp(value)}` } as React.CSSProperties}
             >
-                <span>{label}</span>
+                {label && (<span>label</span>)}
                 <div>
                     <input
                         type='range'
