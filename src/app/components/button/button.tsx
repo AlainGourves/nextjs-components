@@ -2,33 +2,40 @@
 import '../component-global.scss';
 import buttonStyle from './button.module.scss';
 
-type ButtonProps = {
+type ButtonPropsBase = {
     text: string,
-    onClick(event: React.MouseEvent<HTMLButtonElement>): void;
     id?: string,
     disabled?: boolean | undefined,
-    classAdd?: string | string[] | undefined
+    classAdd?: string | string[] | undefined,
 }
+type ButtonPropsButton = ButtonPropsBase & {
+    type: "button",
+    onClick(event: React.MouseEvent<HTMLButtonElement>): void
+}
+type ButtonPropsSubmit = ButtonPropsBase & {
+    type: "submit",
+}
+type ButtonProps = ButtonPropsButton | ButtonPropsSubmit;
 
 export default function Button(props: ButtonProps) {
 
-    let className= `agf-component ${buttonStyle['agf-btn']} `;
+    let className = `agf-component ${buttonStyle['agf-btn']} `;
+    const {classAdd, ...rest} = props;
 
-    if (props.classAdd) {
-        if (typeof props.classAdd === 'string') {
-            className += buttonStyle[`agf-btn-${props.classAdd}`];
+    if (classAdd) {
+        if (typeof classAdd === 'string') {
+            className += buttonStyle[`agf-btn-${classAdd}`];
         }
-        if (Array.isArray(props.classAdd)) {
-            className += props.classAdd.map((cls: string) => buttonStyle[`agf-btn-${cls}`]).join(' ');
+        if (Array.isArray(classAdd)) {
+            className += classAdd.map((cls: string) => buttonStyle[`agf-btn-${cls}`]).join(' ');
         }
     }
 
     return (
         <button
-            type="button"
             className={className}
             disabled={props.disabled}
-            onClick={props.onClick}
+            {...rest}
         >
             {props.text}
         </button>
