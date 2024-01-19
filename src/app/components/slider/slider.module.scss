@@ -41,12 +41,13 @@
 
 
     // Reserve space for the output when present
-    &:not([class~='label-under']):has(output) {
-        margin-block-end: 2rem;
+    // by default, output is above the slider (to be visible when sliding on mobile)
+    &:not([class~='label-above']):has(output) {
+        margin-block-start: 2rem;
     }
 
-    &[class~='label-under']:has(output) {
-        margin-block-start: 2.2rem;
+    &[class~='label-above']:has(output) {
+        margin-block-end: 2.2rem;
     }
 
     &>div {
